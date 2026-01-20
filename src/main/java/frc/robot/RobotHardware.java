@@ -19,6 +19,18 @@ public class RobotHardware{
      * 50-70 (Other Motors)
      */
 
+    //  TODO: Turn into enums swapappable 
+    /**
+     * Even = Drive
+     * Odd = Steer
+     * A = 20 = Front Right
+     * B = 22 = Back Right
+     * C = 24 = Front Left
+     * D = 26 = Back Left
+     * 
+     * 
+     */
+
     public static RobotHardware getInstance(){
         if(instance == null) instance = new RobotHardware();
         return instance;
