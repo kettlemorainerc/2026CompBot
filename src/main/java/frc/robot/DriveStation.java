@@ -168,7 +168,6 @@ public class DriveStation {
 
         // reset the field-centric heading on left bumper press
         driveNewJoystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-        driveNewJoystick.rightBumper().onTrue(null);
 
         // drivetrain.registerTelemetry(logger::telemeterize);
         // TODO: PUT THIS BACK!
