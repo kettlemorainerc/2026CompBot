@@ -48,7 +48,7 @@ public class DriveStation {
     public static double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     public static double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
-    public static final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+    public static final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric()
         .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     public static SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
@@ -143,7 +143,7 @@ public class DriveStation {
             drivetrain.applyRequest(() ->
                 drive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.1) // Drive forward with negative Y (forward)
                     .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.1) // Drive left with negative X (left)
-                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 0.1) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 0.5) // Drive counterclockwise with negative X (left)
             )
         );
 
@@ -168,6 +168,7 @@ public class DriveStation {
 
         // reset the field-centric heading on left bumper press
         driveNewJoystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        driveNewJoystick.rightBumper().onTrue(null);
 
         // drivetrain.registerTelemetry(logger::telemeterize);
         // TODO: PUT THIS BACK!
