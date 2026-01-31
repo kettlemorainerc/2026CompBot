@@ -20,6 +20,7 @@ import frc.robot.control.DriveJoystick;
 import frc.robot.control.DriveStick;
 import frc.robot.control.DriveXboxController;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.ChangeCentricity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 /**
@@ -51,8 +52,13 @@ public class DriveStation {
     public static final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric()
         .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+
     public static SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     public static SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+
+    private static ChangeCentricity changeCentricity = RobotHardware.getInstance().changeCentricity;
+
+    public static boolean isFieldCentric = false;
 
 
     public DriveStation(RobotHardware hardware) {
@@ -87,6 +93,7 @@ public class DriveStation {
 
     /** Bind primary driver's button commands here */
     private static void bindDriverControl(RobotHardware hardware, DriveStick primary) {
+        new ChangeCentricityControl().bind(new JoystickButton((GenericHID) primary, XboxController.Button.kY.value));
     }
 
     /** Bind technical driver button commands here */
@@ -94,6 +101,7 @@ public class DriveStation {
         // new NewTest(Direction.AUTO).bind(new JoystickButton(secondary, 10));
         // new NewTest(Direction.FORWARD).bind(new JoystickButton(secondary, 11));
         new TestControl().bind(new JoystickButton(secondary, 1));
+        // new ChangeCentricityControl().bind(new JoystickButton(secondary, 2));
         // final TestControl testControl = new TestControl();
         //testControl.bind(new JoystickButton(secondary,1));
     }
@@ -135,6 +143,7 @@ public class DriveStation {
     private void configureDriveControls() {
         CommandSwerveDrivetrain drivetrain = RobotHardware.getInstance().drivetrain;
 
+        changeCentricity.setDriveStick(driveNewJoystick);
 
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
@@ -171,5 +180,9 @@ public class DriveStation {
 
         // drivetrain.registerTelemetry(logger::telemeterize);
         // TODO: PUT THIS BACK!
+    }
+
+    public CommandXboxController getController(){
+        return driveNewJoystick;
     }
 }

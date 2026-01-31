@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.ChangeCentricity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Test;
 
@@ -8,6 +9,7 @@ public class RobotHardware{
 
     private static RobotHardware instance = null;
     public static CommandSwerveDrivetrain drivetrain = null;
+    public static ChangeCentricity changeCentricity = null;
 
     /* CAN Ordering:
      * 0-20 (Avoided to exclude legacy setups)
@@ -43,6 +45,7 @@ public class RobotHardware{
 
         test = new Test();
         drivetrain = TunerConstants.createDrivetrain();
+        changeCentricity = new ChangeCentricity();
     }
 
 
