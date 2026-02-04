@@ -1,5 +1,7 @@
 package frc.robot.command;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotHardware;
 import frc.robot.subsystems.Test;
 // import frc.robot.command.newRepeatedCommand;
@@ -18,6 +20,9 @@ public class TestControl extends NewRepeatedCommand{
     @Override
     public void initialize(){
         Elastic.sendNotification(notification);
+        SmartDashboard.putNumber("TestNumberKey", 1);
+        
+
     }
 
     @Override

@@ -138,7 +138,6 @@ public class DriveStation {
     private void configureDriveControls() {
         CommandSwerveDrivetrain drivetrain = RobotHardware.getInstance().drivetrain;
 
-
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
