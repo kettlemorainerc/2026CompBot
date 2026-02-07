@@ -1,5 +1,6 @@
 package frc.robot;
 
+import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -68,12 +69,12 @@ public class RobotHardware{
             .inverted(false)
             .idleMode(IdleMode.kBrake);
         leftLauncherMotorConfig.encoder
-            .positionConversionFactor(1000)
-            .velocityConversionFactor(1000);
+            .positionConversionFactor(1) //Note to future self, use a factor of 1 for standard RPM
+            .velocityConversionFactor(1);
         leftLauncherMotorConfig.closedLoop
             .feedbackSensor(com.revrobotics.spark.FeedbackSensor.kPrimaryEncoder)
-            .pid(1.0, 0.0, 0.0);
-
+            .pid(0.0001, 0.0, 0.0)
+            .velocityFF(1.0 / 5676.0); 
         leftLauncherMotor.configure(leftLauncherMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 

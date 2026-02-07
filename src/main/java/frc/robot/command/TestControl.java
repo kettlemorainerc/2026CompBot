@@ -13,7 +13,7 @@ public class TestControl extends NewRepeatedCommand{
     
     @Override
     public void initialize(){
-        test.startMoveTest();
+        test.startMoveTest(1000);
     }
 
     @Override

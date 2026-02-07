@@ -20,8 +20,8 @@ public class LauncherOperations implements Subsystem{
        robotHardware = RobotHardware.getInstance();
     }
 
-    public void startMoveTest(){
-        robotHardware.leftLauncherMotor.set(-0.8);
+    public void startMoveTest(double rpm){
+        robotHardware.leftLauncherMotor.getClosedLoopController().setSetpoint(rpm, SparkMax.ControlType.kVelocity);
     }
 
     public void endMoveTest(){
