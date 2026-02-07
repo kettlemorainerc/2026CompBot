@@ -5,10 +5,15 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -27,51 +32,52 @@ public class Robot extends TimedRobot {
 
   private double testdirection;
 
+
+  private final Field2d m_field = new Field2d();
+
+
+
   // private final RobotContainer m_robotContainer;
 
   @Override public void robotInit() {
     hardware = new RobotHardware();
     driveStation = new DriveStation(hardware);
-    
 
 // TODO: THIS IS FINE, WE WILL MOVE THIS
 
     CommandSwerveDrivetrain drivetrain = hardware.drivetrain;
 
-
     CameraServer.startAutomaticCapture();
     SmartDashboard.putData("Swerve Drive", new Sendable() {
 
-  @Override
-  public void initSendable(SendableBuilder builder) {
-    builder.setSmartDashboardType("SwerveDrive");
+      @Override
+      public void initSendable(SendableBuilder builder) {
+        builder.setSmartDashboardType("SwerveDrive");
 
-    builder.addDoubleProperty("Back Right Angle", () -> drivetrain.getModule(0).getSteerMotor().getPosition().getValueAsDouble(), null);
-    builder.addDoubleProperty("Back Right Velocity", () -> drivetrain.getModule(0).getDriveMotor().getVelocity().getValueAsDouble(), null);
+        builder.addDoubleProperty("Back Right Angle", () -> drivetrain.getModule(0).getSteerMotor().getPosition().getValueAsDouble(), null);
+        builder.addDoubleProperty("Back Right Velocity", () -> drivetrain.getModule(0).getDriveMotor().getVelocity().getValueAsDouble(), null);
 
-    builder.addDoubleProperty("Back Left Angle", () -> drivetrain.getModule(1).getSteerMotor().getPosition().getValueAsDouble(), null);
-    builder.addDoubleProperty("Back Left Velocity", () -> drivetrain.getModule(1).getDriveMotor().getVelocity().getValueAsDouble(), null);
-    builder.addDoubleProperty("Front Left Angle", () -> drivetrain.getModule(2).getSteerMotor().getPosition().getValueAsDouble(), null);
-    builder.addDoubleProperty("Front Left Velocity", () -> drivetrain.getModule(2).getDriveMotor().getVelocity().getValueAsDouble(), null);
+        builder.addDoubleProperty("Back Left Angle", () -> drivetrain.getModule(1).getSteerMotor().getPosition().getValueAsDouble(), null);
+        builder.addDoubleProperty("Back Left Velocity", () -> drivetrain.getModule(1).getDriveMotor().getVelocity().getValueAsDouble(), null);
+        builder.addDoubleProperty("Front Left Angle", () -> drivetrain.getModule(2).getSteerMotor().getPosition().getValueAsDouble(), null);
+        builder.addDoubleProperty("Front Left Velocity", () -> drivetrain.getModule(2).getDriveMotor().getVelocity().getValueAsDouble(), null);
 
-    builder.addDoubleProperty("Front Right Angle", () -> drivetrain.getModule(3).getSteerMotor().getPosition().getValueAsDouble(), null);
-    builder.addDoubleProperty("Front Right Velocity", () -> drivetrain.getModule(3).getDriveMotor().getVelocity().getValueAsDouble(), null);
+        builder.addDoubleProperty("Front Right Angle", () -> drivetrain.getModule(3).getSteerMotor().getPosition().getValueAsDouble(), null);
+        builder.addDoubleProperty("Front Right Velocity", () -> drivetrain.getModule(3).getDriveMotor().getVelocity().getValueAsDouble(), null);
+      }
+    });
 
-    builder.addDoubleProperty("Robot Angle", () -> drivetrain.getRotation3d().getAngle(), null);
 
-    // builder.addDoubleProperty("Front Left Angle", () -> 1, null);
-    // builder.addDoubleProperty("Front Left Velocity", () -> 1, null);
+    // TODO: We will also move this
+  // public void Field2d(){
+  //   public FieldObject2d getObject();
+  // }
+    // Do this in either robot or subsystem init
+    SmartDashboard.putData("Field", m_field);
+    // Do this in either robot periodic or subsystem periodic
+    m_field.setRobotPose(new Pose2d(5,8,new Rotation2d(3,7)));
 
-    // builder.addDoubleProperty("Front Right Angle", () -> 1, null);
-    // builder.addDoubleProperty("Front Right Velocity", () -> 1, null);
 
-    // builder.addDoubleProperty("Back Left Angle", () -> 1, null);
-    // builder.addDoubleProperty("Back Left Velocity", () -> 1, null);
-
-    // builder.addDoubleProperty("Back Right Angle", () -> 1, null);
-    // builder.addDoubleProperty("Back Right Velocity", () -> 1, null);
-  }
-});
   }
 
   public Robot() {
