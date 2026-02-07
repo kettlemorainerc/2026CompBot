@@ -1,14 +1,14 @@
 package frc.robot.command;
 
 import frc.robot.RobotHardware;
-import frc.robot.subsystems.Test;
+import frc.robot.subsystems.LauncherOperations;
 // import frc.robot.command.newRepeatedCommand;
 
 public class TestControl extends NewRepeatedCommand{
-    private final Test test;
+    private final LauncherOperations test;
 
     public TestControl(){
-        test = RobotHardware.getInstance().test;
+        test = RobotHardware.getInstance().launcherOperations;
     }
     
     @Override

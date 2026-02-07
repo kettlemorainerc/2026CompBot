@@ -39,7 +39,7 @@ public class DriveStation {
     private static final int TECHNICAL_JOYSTICK_PORT = 4;
     private static final int NUMPAD_PORT = 5;
 
-    private final DriveStick driveStick;
+    private final DriveXboxController driveStick;
     private final Joystick technicalStick;
 
     private final XboxController halfSwitch;
@@ -92,8 +92,10 @@ public class DriveStation {
     }
 
     /** Bind primary driver's button commands here */
-    private static void bindDriverControl(RobotHardware hardware, DriveStick primary) {
-        new ChangeCentricityControl().bind(new JoystickButton((GenericHID) primary, XboxController.Button.kY.value));
+    private static void bindDriverControl(RobotHardware hardware, DriveXboxController primary) {
+        new ChangeCentricityControl().bind(new JoystickButton(primary, 6));
+        // new ChangeCentricityControl().bind(new JoystickButton((GenericHID) primary, 0));
+        
     }
 
     /** Bind technical driver button commands here */
@@ -121,7 +123,7 @@ public class DriveStation {
     }
 
     private static DriveXboxController getXbox(){
-        return new DriveXboxController(DRIVE_XBOX_PORT).setDriveSensitivity(.25,1)
+        return new DriveXboxController(DRIVE_JOYSTICK_PORT).setDriveSensitivity(.25,1)
                                                        .setRotationSensitivity(.05,1);
     }
 

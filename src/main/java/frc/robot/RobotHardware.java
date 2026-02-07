@@ -1,15 +1,27 @@
 package frc.robot;
 
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+import com.revrobotics.spark.config.SparkMaxConfig;
+
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ChangeCentricity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Test;
+import frc.robot.subsystems.LauncherOperations;
 
 public class RobotHardware{
 
     private static RobotHardware instance = null;
     public static CommandSwerveDrivetrain drivetrain = null;
     public static ChangeCentricity changeCentricity = null;
+
+    public final SparkMax leftLauncherMotor;
+    public final SparkMax rightLauncherMotor;
+    // private final SparkClosedLoopController motorPid;
 
     /* CAN Ordering:
      * 0-20 (Avoided to exclude legacy setups)
@@ -38,16 +50,34 @@ public class RobotHardware{
         return instance;
     }
 
-    public final Test test;
+    public final LauncherOperations launcherOperations;
 
     public RobotHardware(){
         instance = this;
 
-        test = new Test();
+        launcherOperations = new LauncherOperations();
         drivetrain = TunerConstants.createDrivetrain();
         changeCentricity = new ChangeCentricity();
+
+
+        leftLauncherMotor = new SparkMax(50, MotorType.kBrushless);
+        rightLauncherMotor = new SparkMax(51, MotorType.kBrushless);
+        // motorPid = motor.getClosedLoopController();
+        SparkMaxConfig leftLauncherMotorConfig = new SparkMaxConfig();
+        leftLauncherMotorConfig
+            .inverted(false)
+            .idleMode(IdleMode.kBrake);
+        leftLauncherMotorConfig.encoder
+            .positionConversionFactor(1000)
+            .velocityConversionFactor(1000);
+        leftLauncherMotorConfig.closedLoop
+            .feedbackSensor(com.revrobotics.spark.FeedbackSensor.kPrimaryEncoder)
+            .pid(1.0, 0.0, 0.0);
+
+        leftLauncherMotor.configure(leftLauncherMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
+    
 
 
 }
