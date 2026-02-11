@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import org.photonvision.PhotonCamera;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -34,6 +36,7 @@ public class Robot extends TimedRobot {
 
 
   private final Field2d m_field = new Field2d();
+  PhotonCamera camera = new PhotonCamera("Camera_Module_v1");
 
 
 
@@ -74,8 +77,8 @@ public class Robot extends TimedRobot {
   // }
     // Do this in either robot or subsystem init
     SmartDashboard.putData("Field", m_field);
-    // Do this in either robot periodic or subsystem periodic
-    m_field.setRobotPose(new Pose2d(5,8,new Rotation2d(3,7)));
+    
+    
 
 
   }
@@ -88,6 +91,20 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
+    // Do this in either robot periodic or subsystem periodic
+    
+
+    var results = camera.getAllUnreadResults();
+    for (var result : results) {
+    var multiTagResult = result.getMultiTagResult();
+      if (multiTagResult.isPresent()) {
+    var fieldToCamera = multiTagResult.get().estimatedPose.best;
+
+    m_field.setRobotPose(new Pose2d(fieldToCamera.getX(),fieldToCamera.getY(), fieldToCamera.getRotation().toRotation2d()));
+
+  }
+}
+    
   }
 
   @Override

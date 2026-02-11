@@ -14,11 +14,11 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 public class Test implements Subsystem{
     
     private final SparkMax motor;
-    private final SparkClosedLoopController motorPid;
+    // private final SparkClosedLoopController motorPid;
 
     public Test(){
         motor = new SparkMax(40, MotorType.kBrushless);
-        motorPid = motor.getClosedLoopController();
+        // motorPid = motor.getClosedLoopController();
         SparkMaxConfig config = new SparkMaxConfig();
         config
             .inverted(false)
@@ -28,7 +28,7 @@ public class Test implements Subsystem{
             .velocityConversionFactor(1000);
         config.closedLoop
             .feedbackSensor(com.revrobotics.spark.FeedbackSensor.kPrimaryEncoder)
-            .pid(1.0, 0.0, 0.0);
+            .pid(1.0, 0.1, 0.0);
 
         motor.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
