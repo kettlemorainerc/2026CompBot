@@ -22,6 +22,10 @@ public class RobotHardware{
 
     public final SparkMax leftLauncherMotor;
     public final SparkMax rightLauncherMotor;
+
+
+    static final boolean LEFT_INVERSION_STATUS = true;
+
     // private final SparkClosedLoopController motorPid;
 
     /* CAN Ordering:
@@ -61,12 +65,14 @@ public class RobotHardware{
         changeCentricity = new ChangeCentricity();
 
 
+        // Launcher motors
         leftLauncherMotor = new SparkMax(50, MotorType.kBrushless);
         rightLauncherMotor = new SparkMax(51, MotorType.kBrushless);
         // motorPid = motor.getClosedLoopController();
+
         SparkMaxConfig leftLauncherMotorConfig = new SparkMaxConfig();
         leftLauncherMotorConfig
-            .inverted(false)
+            .inverted(LEFT_INVERSION_STATUS)
             .idleMode(IdleMode.kBrake);
         leftLauncherMotorConfig.encoder
             .positionConversionFactor(1) //Note to future self, use a factor of 1 for standard RPM
@@ -76,7 +82,20 @@ public class RobotHardware{
             .pid(0.0001, 0.0, 0.0)
             .velocityFF(1.0 / 5676.0); 
         leftLauncherMotor.configure(leftLauncherMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        SparkMaxConfig rightLauncherMotorConfig = new SparkMaxConfig();
+        rightLauncherMotorConfig
+            .inverted(!LEFT_INVERSION_STATUS)
+            .idleMode(IdleMode.kBrake);
+        rightLauncherMotorConfig.encoder
+            .positionConversionFactor(1) //Note to future self, use a factor of 1 for standard RPM
+            .velocityConversionFactor(1);
+        rightLauncherMotorConfig.closedLoop
+            .feedbackSensor(com.revrobotics.spark.FeedbackSensor.kPrimaryEncoder)
+            .pid(0.0001, 0.0, 0.0)
+            .velocityFF(1.0 / 5676.0); 
+        rightLauncherMotor.configure(rightLauncherMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
+
 
     
 

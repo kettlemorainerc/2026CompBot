@@ -28,4 +28,7 @@ public class LauncherOperations implements Subsystem{
         robotHardware.leftLauncherMotor.set(0);
     }
 
+
+
+    // public void launchAtRPM
 }
