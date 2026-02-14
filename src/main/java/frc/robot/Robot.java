@@ -13,6 +13,7 @@ import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
   private DriveStation driveStation;
   private RobotHardware hardware;
   private final Command testAuto = new DriveDistance();
+  double timeRemaining = Timer.getMatchTime();
 
   private int autoTick;
 
@@ -77,6 +79,7 @@ public class Robot extends TimedRobot {
   // }
     // Do this in either robot or subsystem init
     SmartDashboard.putData("Field", m_field);
+    SmartDashboard.putNumber("Match Timer", Timer.getMatchTime());
     
     
 
