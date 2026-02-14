@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
   private double testdirection;
 
 
-  private final Field2d m_field = new Field2d();
+  public static final Field2d m_field = new Field2d();
   PhotonCamera camera = new PhotonCamera("Camera_Module_v1");
 
 
@@ -69,6 +69,7 @@ public class Robot extends TimedRobot {
 
         builder.addDoubleProperty("Front Right Angle", () -> drivetrain.getModule(3).getSteerMotor().getPosition().getValueAsDouble(), null);
         builder.addDoubleProperty("Front Right Velocity", () -> drivetrain.getModule(3).getDriveMotor().getVelocity().getValueAsDouble(), null);
+        
       }
     });
 
