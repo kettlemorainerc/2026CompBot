@@ -102,10 +102,20 @@ public class DriveStation {
     /** Bind technical driver button commands here */
     private void bindTechnicalControl(RobotHardware hardware, Joystick secondary) {
         // new NewTest(Direction.AUTO).bind(new JoystickButton(secondary, 10));
-        // new NewTest(Direction.FORWARD).bind(new JoystickButton(secondary, 11));
-        new LaucherControl(1000).bind(new JoystickButton(secondary, 1));
-        new LaucherControl(2000).bind(new JoystickButton(secondary, 2));
-        new LaucherControl(3000).bind(new JoystickButton(secondary, 3));
+        // new NewTest(Direction.FORWARD).bind(new JoystickButton(secondary, 11));        
+
+
+        RPMChangeHolder holder = new RPMChangeHolder(1000);
+
+        new LauncherControl(250, holder).bind(new JoystickButton(secondary, 1));
+        new LauncherControl(-250, holder).bind(new JoystickButton(secondary, 2));
+
+
+
+
+
+
+        // new LaucherControl(2000).bind(new JoystickButton(secondary, 2));
         // new ChangeCentricityControl().bind(new JoystickButton(secondary, 2));
         // final TestControl testControl = new TestControl();
         //testControl.bind(new JoystickButton(secondary,1));
