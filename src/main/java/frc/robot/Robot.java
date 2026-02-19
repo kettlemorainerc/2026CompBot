@@ -6,6 +6,8 @@ package frc.robot;
 
 import org.photonvision.PhotonCamera;
 
+import com.revrobotics.spark.SparkMax;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -39,6 +41,7 @@ public class Robot extends TimedRobot {
 
   public static final Field2d m_field = new Field2d();
   PhotonCamera camera = new PhotonCamera("Camera_Module_v1");
+  private SparkMax leftLaucherMotor;
 
 
 
@@ -51,6 +54,7 @@ public class Robot extends TimedRobot {
 // TODO: THIS IS FINE, WE WILL MOVE THIS
 
     CommandSwerveDrivetrain drivetrain = hardware.drivetrain;
+    leftLaucherMotor = hardware.leftLauncherMotor;
 
     CameraServer.startAutomaticCapture();
     SmartDashboard.putData("Swerve Drive", new Sendable() {
@@ -80,7 +84,8 @@ public class Robot extends TimedRobot {
   // }
     // Do this in either robot or subsystem init
     SmartDashboard.putData("Field", m_field);
-    SmartDashboard.putNumber("Match Timer", Timer.getMatchTime());
+
+    // ADDDDD elastic widget for motor rpm
     
     
 
@@ -97,17 +102,18 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run(); 
     // Do this in either robot periodic or subsystem periodic
     
+    SmartDashboard.putNumber("Match Timer", Timer.getMatchTime());
+    SmartDashboard.putNumber("Motor Rpm", leftLaucherMotor.getEncoder().getVelocity());
+
 
     var results = camera.getAllUnreadResults();
     for (var result : results) {
-    var multiTagResult = result.getMultiTagResult();
+      var multiTagResult = result.getMultiTagResult();
       if (multiTagResult.isPresent()) {
-    var fieldToCamera = multiTagResult.get().estimatedPose.best;
-
-    m_field.setRobotPose(new Pose2d(fieldToCamera.getX(),fieldToCamera.getY(), fieldToCamera.getRotation().toRotation2d()));
-
-  }
-}
+        var fieldToCamera = multiTagResult.get().estimatedPose.best;
+        m_field.setRobotPose(new Pose2d(fieldToCamera.getX(),fieldToCamera.getY(), fieldToCamera.getRotation().toRotation2d()));
+      }
+    }
     
   }
 

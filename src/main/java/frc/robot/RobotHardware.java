@@ -24,7 +24,7 @@ public class RobotHardware{
     public final SparkMax rightLauncherMotor;
 
 
-    static final boolean LEFT_INVERSION_STATUS = true;
+    static final boolean LEFT_INVERSION_STATUS = false;
 
     // private final SparkClosedLoopController motorPid;
 
