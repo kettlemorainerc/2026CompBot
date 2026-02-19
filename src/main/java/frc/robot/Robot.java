@@ -27,6 +27,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private AutonomousContol m_AutonomousContol = new AutonomousContol();
   private DriveStation driveStation;
   private RobotHardware hardware;
   private final Command testAuto = new DriveDistance();
@@ -122,14 +123,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    autoTick = 0;
-    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = m_AutonomousContol.getAuntonomousCommand();
 
-    // if (m_autonomousCommand != null) {
-    //   m_autonomousCommand.schedule();
-    // }
-
-    
+    if(m_autonomousCommand != null){
+      System.out.println("I am a thing");
+      CommandScheduler.getInstance().schedule(m_autonomousCommand);
+    // m_autonomousCommand.schedule();
+    }
   }
 
   @Override
