@@ -34,9 +34,8 @@ public class LauncherOperations implements Subsystem{
     public void setSpeed(int rpm){
         output = Math.min(rpm, 5000);
         output = Math.max(rpm, 0);
-        robotHardware.leftLauncherMotor.set(output);
-        robotHardware.rightLauncherMotor.set(output);
-
+        // robotHardware.leftLauncherMotor.set(output);
+        // robotHardware.rightLauncherMotor.set(output);
     }
 
     // create new methods for changing rpm plz

@@ -105,10 +105,12 @@ public class DriveStation {
         // new NewTest(Direction.FORWARD).bind(new JoystickButton(secondary, 11));        
 
 
-        RPMChangeHolder holder = new RPMChangeHolder(1000);
+        RPMChangeHolder holder = new RPMChangeHolder(3000);
 
-        new LauncherControl(250, holder).bind(new JoystickButton(secondary, 1));
-        new LauncherControl(-250, holder).bind(new JoystickButton(secondary, 2));
+        new LauncherControl(holder).bind(new JoystickButton(secondary, 2));
+
+        // new LauncherControl(250, holder).bind(new JoystickButton(secondary, 1));
+        // new LauncherControl(-250, holder).bind(new JoystickButton(secondary, 3));
 
 
 
