@@ -27,7 +27,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  private AutonomousContol m_AutonomousContol = new AutonomousContol();
+  private AutonomousContol m_AutonomousContol;
   private DriveStation driveStation;
   private RobotHardware hardware;
   private final Command testAuto = new DriveDistance();
@@ -48,6 +48,7 @@ public class Robot extends TimedRobot {
   @Override public void robotInit() {
     hardware = new RobotHardware();
     driveStation = new DriveStation(hardware);
+    m_AutonomousContol  = new AutonomousContol();
 
 // TODO: THIS IS FINE, WE WILL MOVE THIS
 
