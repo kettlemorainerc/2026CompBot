@@ -16,12 +16,14 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.command.*;
+import frc.robot.command.RoombaControls.RoombaDirection;
 import frc.robot.control.DriveJoystick;
 import frc.robot.control.DriveStick;
 import frc.robot.control.DriveXboxController;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ChangeCentricity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Roomba;
 import frc.robot.util.Elastic;
 
 /**
@@ -105,9 +107,12 @@ public class DriveStation {
         // new NewTest(Direction.FORWARD).bind(new JoystickButton(secondary, 11));        
 
 
-        RPMChangeHolder holder = new RPMChangeHolder(3000);
+        RPMChangeHolder holder = new RPMChangeHolder(2000);
 
         new LauncherControl(holder).bind(new JoystickButton(secondary, 2));
+        new RoombaControls(RoombaDirection.START).bind(new JoystickButton(secondary,4));
+        new RoombaControls(RoombaDirection.REVERSE).bind(new JoystickButton(secondary,8));
+
 
         // new LauncherControl(250, holder).bind(new JoystickButton(secondary, 1));
         // new LauncherControl(-250, holder).bind(new JoystickButton(secondary, 3));

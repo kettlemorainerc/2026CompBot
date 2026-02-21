@@ -13,6 +13,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.ChangeCentricity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.LauncherOperations;
+import frc.robot.subsystems.Roomba;
 
 public class RobotHardware{
 
@@ -56,6 +57,7 @@ public class RobotHardware{
     }
 
     public final LauncherOperations launcherOperations;
+    public final Roomba roomba;
 
     public RobotHardware(){
         instance = this;
@@ -63,6 +65,7 @@ public class RobotHardware{
         launcherOperations = new LauncherOperations();
         drivetrain = TunerConstants.createDrivetrain();
         changeCentricity = new ChangeCentricity();
+        roomba = new Roomba();
 
 
         // Launcher motors
