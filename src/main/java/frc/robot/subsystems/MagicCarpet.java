@@ -17,7 +17,7 @@ public class MagicCarpet implements Subsystem {
     private final SparkClosedLoopController motorPid;
 
     public MagicCarpet(){
-        motor = new SparkMax(53, MotorType.kBrushless);
+        motor = new SparkMax(54, MotorType.kBrushless);
         motorPid = motor.getClosedLoopController();
         SparkMaxConfig config = new SparkMaxConfig();
         config
