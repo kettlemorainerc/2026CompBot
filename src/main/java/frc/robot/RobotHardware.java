@@ -14,6 +14,8 @@ import frc.robot.subsystems.ChangeCentricity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.LauncherOperations;
 import frc.robot.subsystems.Roomba;
+import frc.robot.subsystems.MagicCarpet;
+
 
 public class RobotHardware{
 
@@ -58,6 +60,7 @@ public class RobotHardware{
 
     public final LauncherOperations launcherOperations;
     public final Roomba roomba;
+    public final MagicCarpet carpet;
 
     public RobotHardware(){
         instance = this;
@@ -66,6 +69,8 @@ public class RobotHardware{
         drivetrain = TunerConstants.createDrivetrain();
         changeCentricity = new ChangeCentricity();
         roomba = new Roomba();
+        carpet = new MagicCarpet();
+
 
 
         // Launcher motors
