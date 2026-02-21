@@ -15,6 +15,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 public class LauncherOperations implements Subsystem{
     
     RobotHardware robotHardware;
+    int output;
 
     public LauncherOperations(){
        robotHardware = RobotHardware.getInstance();
@@ -30,7 +31,14 @@ public class LauncherOperations implements Subsystem{
         robotHardware.rightLauncherMotor.set(0);
     }
 
+    public void setSpeed(int rpm){
+        output = Math.min(rpm, 5000);
+        output = Math.max(rpm, 0);
+        // robotHardware.leftLauncherMotor.set(output);
+        // robotHardware.rightLauncherMotor.set(output);
+    }
 
+    // create new methods for changing rpm plz
 
     // public void launchAtRPM
 }

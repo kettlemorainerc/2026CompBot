@@ -73,7 +73,7 @@ public class RobotHardware{
         SparkMaxConfig leftLauncherMotorConfig = new SparkMaxConfig();
         leftLauncherMotorConfig
             .inverted(LEFT_INVERSION_STATUS)
-            .idleMode(IdleMode.kBrake);
+            .idleMode(IdleMode.kCoast);
         leftLauncherMotorConfig.encoder
             .positionConversionFactor(1) //Note to future self, use a factor of 1 for standard RPM
             .velocityConversionFactor(1);
@@ -85,7 +85,7 @@ public class RobotHardware{
         SparkMaxConfig rightLauncherMotorConfig = new SparkMaxConfig();
         rightLauncherMotorConfig
             .inverted(!LEFT_INVERSION_STATUS)
-            .idleMode(IdleMode.kBrake);
+            .idleMode(IdleMode.kCoast);
         rightLauncherMotorConfig.encoder
             .positionConversionFactor(1) //Note to future self, use a factor of 1 for standard RPM
             .velocityConversionFactor(1);
