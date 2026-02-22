@@ -117,12 +117,12 @@ public class DriveStation {
         // new NewTest(Direction.FORWARD).bind(new JoystickButton(secondary, 11));        
 
 
-        RPMChangeHolder holder = new RPMChangeHolder(3000);
+        RPMChangeHolder holder = new RPMChangeHolder(4500);
 
         new LauncherControl(holder).bind(new JoystickButton(secondary, 5));
         new LauncherControl(holder).bind(new JoystickButton(secondary, 1));
-        // new LauncherControl(250, holder).bind(new JoystickButton(secondary, 2));
-        // new LauncherControl(-250, holder).bind(new JoystickButton(secondary, 6));
+        new LauncherControl(250, holder).bind(new JoystickButton(secondary, 2));
+        new LauncherControl(-250, holder).bind(new JoystickButton(secondary, 6));
 
         new RoombaControls(RoombaDirection.START).bind(new JoystickButton(secondary,3));
         new RoombaControls(RoombaDirection.REVERSE).bind(new JoystickButton(secondary,7));

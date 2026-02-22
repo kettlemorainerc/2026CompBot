@@ -56,9 +56,9 @@ public class ChangeCentricity implements Subsystem{
     public void setFieldCentric(){
         System.out.println("I WAS CALLED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         drivetrain.setControl(
-            fieldDrive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.1) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.1) // Drive left with negative X (left)
-                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 0.5) // Drive counterclockwise with negative X (left)
+            fieldDrive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.25) // Drive forward with negative Y (forward)
+                    .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.25) // Drive left with negative X (left)
+                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 1) // Drive counterclockwise with negative X (left)
             );
 
     }
