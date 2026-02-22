@@ -6,12 +6,18 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 /*----------------------------------------------------------------------------*/
 /* Copyright (c) 2020 FRC Team 2077. All Rights Reserved.                     */
 /* Open Source Software - may be modified and shared by FRC teams.            */
 /*----------------------------------------------------------------------------*/
 
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -65,6 +71,7 @@ public class DriveStation {
 
     public static boolean isFieldCentric = false;
 
+    CommandSwerveDrivetrain drivetrain = RobotHardware.getInstance().drivetrain;
 
     public DriveStation(RobotHardware hardware) {
         /** Set the driver's control method this MUST be a {@link DriveStick} implementation */
@@ -78,6 +85,7 @@ public class DriveStation {
         technicalStick = getNumpad();
 
         bind(hardware);
+
     }
 
     /**
@@ -219,5 +227,9 @@ public class DriveStation {
 
     public CommandXboxController getController(){
         return driveNewJoystick;
+    }
+
+    private void driveRobotRelative(ChassisSpeeds speeds){
+        drivetrain.driveRobotRelative(speeds);
     }
 }

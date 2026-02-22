@@ -139,6 +139,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
         RobotConfig config;
         try{
+            System.out.println("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
             config = RobotConfig.fromGUISettings();
 
             // Configure AutoBuilder last
@@ -148,8 +149,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 this::getCurrentSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
                 (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
                 new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                        new PIDConstants(0.1, 0.0, 0.0), // Translation PID constants
-                        new PIDConstants(100, 0.0, 0.5) // Rotation PID constants
+                        new PIDConstants(1, 0.0, 0.0), // Translation PID constants
+                        new PIDConstants(1, 0.0, 0.0) // Rotation PID constants
                 ),
                 config, // The robot configuration
                 () -> {
@@ -164,9 +165,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 return false;
                 },
                 this // Reference to this subsystem to set requirements
+
             );
         } catch (Exception e) {
             // Handle exception as needed
+            System.out.println(0/0);
             e.printStackTrace();
         }
 
@@ -195,6 +198,40 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         super(drivetrainConstants, odometryUpdateFrequency, modules);
         if (Utils.isSimulation()) {
             startSimThread();
+        }
+        RobotConfig config;
+        try{
+            System.out.println("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
+            config = RobotConfig.fromGUISettings();
+
+            // Configure AutoBuilder last
+            AutoBuilder.configure(
+                this::getPose, // Robot pose supplier
+                this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+                this::getCurrentSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+                (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+                new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
+                        new PIDConstants(1, 0.0, 0.0), // Translation PID constants
+                        new PIDConstants(1, 0.0, 0.0) // Rotation PID constants
+                ),
+                config, // The robot configuration
+                () -> {
+                // Boolean supplier that controls when the path will be mirrored for the red alliance
+                // This will flip the path being followed to the red side of the field.
+                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+                },
+                this // Reference to this subsystem to set requirements
+            );
+        } catch (Exception e) {
+            // Handle exception as needed
+            System.out.println(0/0);
+            e.printStackTrace();
         }
     }
 
@@ -227,6 +264,40 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         super(drivetrainConstants, odometryUpdateFrequency, odometryStandardDeviation, visionStandardDeviation, modules);
         if (Utils.isSimulation()) {
             startSimThread();
+        }
+        RobotConfig config;
+        try{
+            System.out.println("33333333333333333333333333333333333333333333333333333333333333333333333333333333");
+            config = RobotConfig.fromGUISettings();
+
+            // Configure AutoBuilder last
+            AutoBuilder.configure(
+                this::getPose, // Robot pose supplier
+                this::resetPose, // Method to reset odometry (will be called if your auto has a starting pose)
+                this::getCurrentSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+                (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
+                new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
+                        new PIDConstants(1, 0.0, 0.0), // Translation PID constants
+                        new PIDConstants(1, 0.0, 0.0) // Rotation PID constants
+                ),
+                config, // The robot configuration
+                () -> {
+                // Boolean supplier that controls when the path will be mirrored for the red alliance
+                // This will flip the path being followed to the red side of the field.
+                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+                var alliance = DriverStation.getAlliance();
+                if (alliance.isPresent()) {
+                    return alliance.get() == DriverStation.Alliance.Red;
+                }
+                return false;
+                },
+                this // Reference to this subsystem to set requirements
+            );
+        } catch (Exception e) {
+            // Handle exception as needed
+            System.out.println(0/0);
+            e.printStackTrace();
         }
     }
 
@@ -332,16 +403,20 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         super.addVisionMeasurement(visionRobotPoseMeters, Utils.fpgaToCurrentTime(timestampSeconds), visionMeasurementStdDevs);
     }
 
-    private Pose2d getPose(){
+    public Pose2d getPose(){
         return Robot.m_field.getRobotPose();
     }
     
-    private ChassisSpeeds getCurrentSpeeds(){
+    public ChassisSpeeds getCurrentSpeeds(){
         return getKinematics().toChassisSpeeds(getModule(0).getCurrentState(), getModule(1).getCurrentState(), getModule(2).getCurrentState(), getModule(3).getCurrentState());
     }
     
-    private void driveRobotRelative(ChassisSpeeds speeds){
-        applyRequest(() ->
+    public void driveRobotRelative(ChassisSpeeds speeds){
+        System.out.println("I BE DOING A THING THAT DOES A THING TO HOPEFULLY WHEEL THE THING TO DOING THE THING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(speeds.vxMetersPerSecond);
+        System.out.println(speeds.vyMetersPerSecond);
+        System.out.println(speeds.omegaRadiansPerSecond);
+        setControl(
                 drive.withVelocityX(speeds.vxMetersPerSecond) // Drive forward with negative Y (forward)
                     .withVelocityY(speeds.vyMetersPerSecond) // Drive left with negative X (left)
                     .withRotationalRate(speeds.omegaRadiansPerSecond) // Drive counterclockwise with negative X (left)
