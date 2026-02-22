@@ -109,19 +109,19 @@ public class DriveStation {
         // new NewTest(Direction.FORWARD).bind(new JoystickButton(secondary, 11));        
 
 
-        RPMChangeHolder holder = new RPMChangeHolder(2000);
+        RPMChangeHolder holder = new RPMChangeHolder(3000);
 
         new LauncherControl(holder).bind(new JoystickButton(secondary, 5));
         new LauncherControl(holder).bind(new JoystickButton(secondary, 1));
-        new LauncherControl(holder).bind(new JoystickButton(secondary, 2));
-        new LauncherControl(holder).bind(new JoystickButton(secondary, 6));
+        // new LauncherControl(250, holder).bind(new JoystickButton(secondary, 2));
+        // new LauncherControl(-250, holder).bind(new JoystickButton(secondary, 6));
 
         new RoombaControls(RoombaDirection.START).bind(new JoystickButton(secondary,3));
         new RoombaControls(RoombaDirection.REVERSE).bind(new JoystickButton(secondary,7));
 
-        new MagicCarpetControls(CarpetDirection.FLY).bind(new JoystickButton(secondary,4));
-        new MagicCarpetControls(CarpetDirection.FALL).bind(new JoystickButton(secondary,8));
-        new MagicCarpetControls(CarpetDirection.FLY).bind(new JoystickButton(secondary,1));
+        new MagicCarpetControls(CarpetDirection.FALL).bind(new JoystickButton(secondary,4));
+        new MagicCarpetControls(CarpetDirection.FLY).bind(new JoystickButton(secondary,8));
+        new MagicCarpetControls(CarpetDirection.FALL).bind(new JoystickButton(secondary,1));
         
     
 
@@ -184,9 +184,9 @@ public class DriveStation {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
-                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 0.5) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.25) // Drive forward with negative Y (forward)
+                    .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.25) // Drive left with negative X (left)
+                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 1) // Drive counterclockwise with negative X (left)
             )
         );
 
