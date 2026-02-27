@@ -10,7 +10,9 @@ public class RPMChangeHolder{
     }
 
     public void changeRPMTarget(int rpm){
-        this.targetRPM = rpm;
+        this.targetRPM += rpm;
+        this.targetRPM = Math.min(targetRPM, 5000);
+        this.targetRPM = Math.max(targetRPM, 0);
     }
 
     public int getTargetRPM(){

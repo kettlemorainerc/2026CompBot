@@ -404,7 +404,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     public Pose2d getPose(){
-        return Robot.m_field.getRobotPose();
+        Pose2d pose = Robot.m_field.getRobotPose();
+        System.out.println(pose);
+        return pose;
     }
     
     public ChassisSpeeds getCurrentSpeeds(){

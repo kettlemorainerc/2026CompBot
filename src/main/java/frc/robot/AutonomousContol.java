@@ -31,6 +31,7 @@ private final SendableChooser<Command> autoChooser;
 
 
     public Command getAuntonomousCommand(){
-        return autoChooser.getSelected();
+        Command selected = autoChooser.getSelected();
+        return selected;
     }
 }

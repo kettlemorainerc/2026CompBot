@@ -15,15 +15,17 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 public class LauncherOperations implements Subsystem{
     
     RobotHardware robotHardware;
-    int output;
+    double output;
 
     public LauncherOperations(){
        robotHardware = RobotHardware.getInstance();
     }
 
     public void startMoveTest(double rpm){
-        robotHardware.leftLauncherMotor.getClosedLoopController().setSetpoint(rpm, SparkMax.ControlType.kVelocity);
-        robotHardware.rightLauncherMotor.getClosedLoopController().setSetpoint(rpm, SparkMax.ControlType.kVelocity);
+        output = Math.min(rpm, 5000);
+        output = Math.max(rpm, 0);
+        robotHardware.leftLauncherMotor.getClosedLoopController().setSetpoint(output, SparkMax.ControlType.kVelocity);
+        robotHardware.rightLauncherMotor.getClosedLoopController().setSetpoint(output, SparkMax.ControlType.kVelocity);
     }
 
     public void endMoveTest(){
