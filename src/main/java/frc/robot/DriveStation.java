@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.command.*;
+import frc.robot.command.ChangeCentricityControl.Directionality;
 import frc.robot.command.RoombaControls.RoombaDirection;
 import frc.robot.command.MagicCarpetControls.CarpetDirection;
 import frc.robot.control.DriveJoystick;
@@ -106,7 +107,8 @@ public class DriveStation {
 
     /** Bind primary driver's button commands here */
     private static void bindDriverControl(RobotHardware hardware, DriveXboxController primary) {
-        new ChangeCentricityControl().bind(new JoystickButton(primary, 6));
+        new ChangeCentricityControl(Directionality.FIELD).bind(new JoystickButton(primary, 6));
+        new ChangeCentricityControl(Directionality.BACKWARDS).bind(new JoystickButton(primary, 3));
         // new ChangeCentricityControl().bind(new JoystickButton((GenericHID) primary, 0));
         
     }
