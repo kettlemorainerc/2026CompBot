@@ -23,7 +23,7 @@ public class LauncherOperations implements Subsystem{
 
     public void startMoveTest(double rpm){
         output = Math.min(rpm, 5000);
-        output = Math.max(rpm, 0);
+        output = Math.max(rpm, 2000);
         robotHardware.leftLauncherMotor.getClosedLoopController().setSetpoint(output, SparkMax.ControlType.kVelocity);
         robotHardware.rightLauncherMotor.getClosedLoopController().setSetpoint(output, SparkMax.ControlType.kVelocity);
     }
