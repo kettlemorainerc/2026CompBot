@@ -36,7 +36,10 @@ public class Robot extends TimedRobot {
   private RobotHardware hardware;
   private final Command testAuto = new DriveDistance();
   double timeRemaining = Timer.getMatchTime();
+<<<<<<< HEAD
   double voltage = RobotController.getBatteryVoltage();
+=======
+>>>>>>> ab3b2fedb6827792808d72996efc19edd38c5f68
 
   private int autoTick;
 
