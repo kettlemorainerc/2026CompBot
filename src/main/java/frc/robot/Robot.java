@@ -28,6 +28,7 @@ import frc.robot.command.DriveDistance;
 import frc.robot.command.RPMChangeHolder;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.util.Elastic;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -123,13 +124,17 @@ public class Robot extends TimedRobot {
     for (var result : results) {
       var multiTagResult = result.getMultiTagResult();
       if (multiTagResult.isPresent()) {
-        var fieldToCamera = multiTagResult  .get().estimatedPose.best;
+        var fieldToCamera = multiTagResult.get().estimatedPose.best;
         //m_field.setRobotPose(new Pose2d(fieldToCamera.getX(),fieldToCamera.getY(), fieldToCamera.getRotation().toRotation2d()));
       }
     }
     var state = drivetrain.getState();
     Pose2d pose = state.Pose;
     m_field.setRobotPose(pose);
+  }
+
+  public void switchTab(){
+    Elastic.selectTab("Field");
   }
 
   @Override

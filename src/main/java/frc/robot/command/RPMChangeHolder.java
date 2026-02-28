@@ -1,4 +1,6 @@
 package frc.robot.command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class RPMChangeHolder{
     
@@ -13,10 +15,10 @@ public class RPMChangeHolder{
         this.targetRPM += rpm;
         this.targetRPM = Math.min(targetRPM, 5000);
         this.targetRPM = Math.max(targetRPM, 2000);
+        SmartDashboard.putNumber("Motor Max", targetRPM);
     }
 
-    public int getTargetRPM(){
-        
+    public int getTargetRPM(){        
         return targetRPM;
     }
 
