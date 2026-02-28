@@ -18,17 +18,17 @@ public class LauncherControl extends NewRepeatedCommand{
     private final boolean isChanger;
 
     public LauncherControl(int rpm, RPMChangeHolder holder){
-        launcher = RobotHardware.getInstance().launcherOperations;
+        this.launcher = RobotHardware.getInstance().launcherOperations;
         this.changeByRPM = rpm;
         this.holder = holder;
-        isChanger = true;
+        this.isChanger = true;
     }
 
     public LauncherControl(RPMChangeHolder holder){
-        launcher = RobotHardware.getInstance().launcherOperations;
+        this.launcher = RobotHardware.getInstance().launcherOperations;
         this.changeByRPM = 0;
         this.holder = holder;
-        isChanger = false;
+        this.isChanger = false;
     }
     
 
@@ -43,6 +43,9 @@ public class LauncherControl extends NewRepeatedCommand{
 
     @Override
     public void execute() {
+        if(!isChanger){
+            launcher.startMoveTest(holder.getTargetRPM());
+        }
     }
 
     @Override

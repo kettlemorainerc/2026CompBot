@@ -39,6 +39,7 @@ public class Robot extends TimedRobot {
 <<<<<<< HEAD
   double voltage = RobotController.getBatteryVoltage();
 =======
+  private CommandSwerveDrivetrain drivetrain;
 >>>>>>> ab3b2fedb6827792808d72996efc19edd38c5f68
 
   private int autoTick;
@@ -59,10 +60,11 @@ public class Robot extends TimedRobot {
     hardware = new RobotHardware();
     driveStation = new DriveStation(hardware);
     m_AutonomousContol  = new AutonomousContol();
+    drivetrain = RobotHardware.getInstance().drivetrain;
 
 // TODO: THIS IS FINE, WE WILL MOVE THIS
 
-    CommandSwerveDrivetrain drivetrain = hardware.drivetrain;
+    // CommandSwerveDrivetrain drivetrain = hardware.drivetrain;
     leftLaucherMotor = hardware.leftLauncherMotor;
 
     CameraServer.startAutomaticCapture();
@@ -123,11 +125,13 @@ public class Robot extends TimedRobot {
     for (var result : results) {
       var multiTagResult = result.getMultiTagResult();
       if (multiTagResult.isPresent()) {
-        var fieldToCamera = multiTagResult.get().estimatedPose.best;
-        m_field.setRobotPose(new Pose2d(fieldToCamera.getX(),fieldToCamera.getY(), fieldToCamera.getRotation().toRotation2d()));
+        var fieldToCamera = multiTagResult  .get().estimatedPose.best;
+        //m_field.setRobotPose(new Pose2d(fieldToCamera.getX(),fieldToCamera.getY(), fieldToCamera.getRotation().toRotation2d()));
       }
     }
-    
+    var state = drivetrain.getState();
+    Pose2d pose = state.Pose;
+    m_field.setRobotPose(pose);
   }
 
   @Override

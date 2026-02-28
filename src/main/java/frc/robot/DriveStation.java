@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.command.*;
+import frc.robot.command.ChangeCentricityControl.Directionality;
 import frc.robot.command.RoombaControls.RoombaDirection;
 import frc.robot.command.MagicCarpetControls.CarpetDirection;
 import frc.robot.control.DriveJoystick;
@@ -106,7 +107,8 @@ public class DriveStation {
 
     /** Bind primary driver's button commands here */
     private static void bindDriverControl(RobotHardware hardware, DriveXboxController primary) {
-        new ChangeCentricityControl().bind(new JoystickButton(primary, 6));
+        new ChangeCentricityControl(Directionality.FIELD).bind(new JoystickButton(primary, 6));
+        new ChangeCentricityControl(Directionality.BACKWARDS).bind(new JoystickButton(primary, 3));
         // new ChangeCentricityControl().bind(new JoystickButton((GenericHID) primary, 0));
         
     }
@@ -118,9 +120,16 @@ public class DriveStation {
 
 
         RPMChangeHolder holder = new RPMChangeHolder(3000);
+        // RPMChangeHolder holder2 = new RPMChangeHolder(3000);
+        // RPMChangeHolder holder3 = new RPMChangeHolder(4000);
+
 
         new LauncherControl(holder).bind(new JoystickButton(secondary, 5));
         new LauncherControl(holder).bind(new JoystickButton(secondary, 1));
+        new LauncherControl(250 , holder).bind(new JoystickButton(secondary, 2));
+        new LauncherControl(-250 , holder).bind(new JoystickButton(secondary, 6));
+        // new LauncherControl(holder2).bind(new JoystickButton(secondary, 10));
+        // new LauncherControl(holder3).bind(new JoystickButton(secondary, 6));
         // new LauncherControl(250, holder).bind(new JoystickButton(secondary, 2));
         // new LauncherControl(-250, holder).bind(new JoystickButton(secondary, 6));
 
@@ -229,7 +238,4 @@ public class DriveStation {
         return driveNewJoystick;
     }
 
-    private void driveRobotRelative(ChassisSpeeds speeds){
-        drivetrain.driveRobotRelative(speeds);
-    }
 }
