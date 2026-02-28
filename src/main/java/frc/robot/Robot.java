@@ -14,6 +14,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.command.DriveDistance;
+import frc.robot.command.RPMChangeHolder;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -34,6 +36,7 @@ public class Robot extends TimedRobot {
   private RobotHardware hardware;
   private final Command testAuto = new DriveDistance();
   double timeRemaining = Timer.getMatchTime();
+  double voltage = RobotController.getBatteryVoltage();
 
   private int autoTick;
 
@@ -42,6 +45,7 @@ public class Robot extends TimedRobot {
 
   public static final Field2d m_field = new Field2d();
   PhotonCamera camera = new PhotonCamera("Camera_Module_v1");
+  // Limelight camera2 = new Limelight("test");
   private SparkMax leftLaucherMotor;
 
 
@@ -95,17 +99,21 @@ public class Robot extends TimedRobot {
   }
 
   public Robot() {
-    Shuffleboard.getTab("Teleoperated").addCamera("DriverCamera", "testCamera","http://10.20.77.200:1181/stream.mjpg");
+    // Shuffleboard.getTab("Teleoperated").addCamera("DriverCamera", "testCamera","http://10.20.77.200:1181/stream.mjpg");
+    Shuffleboard.getTab("Teleoperated").addCamera("Limelight", "FrontCamera", "http://10.20.77.20:5800");
+
     // m_robotContainer = new RobotContainer();
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
+    RobotController.getBatteryVoltage();
     // Do this in either robot periodic or subsystem periodic
     
     SmartDashboard.putNumber("Match Timer", Timer.getMatchTime());
     SmartDashboard.putNumber("Motor Rpm", leftLaucherMotor.getEncoder().getVelocity());
+    SmartDashboard.putNumber("Battery Voltage", voltage);
 
 
     var results = camera.getAllUnreadResults();
@@ -133,7 +141,7 @@ public class Robot extends TimedRobot {
     m_autonomousCommand = m_AutonomousContol.getAuntonomousCommand();
 
     if(m_autonomousCommand != null){
-      System.out.println("I am a thing");
+      // System.out.println("I am a thing");
       CommandScheduler.getInstance().schedule(m_autonomousCommand);
     // m_autonomousCommand.schedule();
     }
