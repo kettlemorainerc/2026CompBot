@@ -5,7 +5,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.command.LauncherControl;
+import frc.robot.command.MagicCarpetControls;
 import frc.robot.command.RPMChangeHolder;
+import frc.robot.command.RoombaControls;
+import frc.robot.command.MagicCarpetControls.CarpetDirection;
+import frc.robot.command.RoombaControls.RoombaDirection;
 
 import javax.sound.sampled.SourceDataLine;
 
@@ -19,9 +23,17 @@ private final SendableChooser<Command> autoChooser;
 
     public AutonomousContol(){
         RPMChangeHolder rpm = new RPMChangeHolder(4000);
+        RPMChangeHolder stopSpeed = new RPMChangeHolder(0);
 
         NamedCommands.registerCommand("Debug", Commands.print("DEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUG"));
-        NamedCommands.registerCommand("Launcher Forward", new LauncherControl(rpm));
+        NamedCommands.registerCommand("Start Intake", new RoombaControls(RoombaDirection.START, true).withTimeout(0));
+        NamedCommands.registerCommand("Stop Intake", new RoombaControls(RoombaDirection.STOP, true).withTimeout(0));
+        NamedCommands.registerCommand("Start Launcher", new LauncherControl(rpm, true).withTimeout(0));
+        NamedCommands.registerCommand("Stop Launcher", new LauncherControl(stopSpeed, false).withTimeout(0));
+        NamedCommands.registerCommand("Feed The Beast", new MagicCarpetControls(CarpetDirection.FLY, true).withTimeout(0));
+        NamedCommands.registerCommand("Starve The Beast", new MagicCarpetControls(CarpetDirection.STOP, true).withTimeout(0));
+
+
 
         autoChooser = AutoBuilder.buildAutoChooser();
 

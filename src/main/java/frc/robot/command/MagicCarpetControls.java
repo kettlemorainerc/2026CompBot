@@ -8,18 +8,41 @@ public class MagicCarpetControls extends NewRepeatedCommand {
         FLY,
         FALL,
         WAIT
+        STOP
     }
 
     private final CarpetDirection direction;
     private final MagicCarpet carpet;
     private final RPMChangeHolder holder;
+    private final boolean auto;
 
     public MagicCarpetControls(CarpetDirection direction, RPMChangeHolder holder){
         this.direction = direction;
         carpet = RobotHardware.getInstance().carpet;
         this.holder = holder;
+        this.auto = false;
+    }
+    public MagicCarpetControls(CarpetDirection direction, Boolean auto){
+        this.direction = direction;
+        carpet = RobotHardware.getInstance().carpet;
+        this.auto = auto;
     }
 
+
+    @Override
+    public void initialize(){
+        switch (direction) {
+            case FLY:
+                carpet.carpetFly();
+                break;
+            case FALL:
+                carpet.carpetFall();
+                break;
+            case STOP:
+                carpet.stopCarpet();
+                break;
+        }
+    }
 
     @Override
     public void execute() {
@@ -40,7 +63,9 @@ public class MagicCarpetControls extends NewRepeatedCommand {
 
     @Override
     public void end(boolean interrupted) {
-        carpet.stopCarpet();
+        if(!auto){
+            carpet.stopCarpet();
+        }
     }
     
 }
