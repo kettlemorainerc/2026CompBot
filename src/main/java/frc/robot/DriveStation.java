@@ -133,7 +133,7 @@ public class DriveStation {
         new LauncherControl(-250 , holder).bind(new JoystickButton(secondary, 4));
 
         new RoombaControls(RoombaDirection.START).bind(new JoystickButton(secondary,2));
-        new RoombaControls(RoombaDirection.REVERSE).bind(new JoystickButton(secondary,7));
+        new RoombaControls(RoombaDirection.REVERSE).bind(new JoystickButton(secondary,6));
 
         new MagicCarpetControls(CarpetDirection.FALL, holder).bind(new JoystickButton(secondary,7));
         new MagicCarpetControls(CarpetDirection.FLY, holder).bind(new JoystickButton(secondary,8));

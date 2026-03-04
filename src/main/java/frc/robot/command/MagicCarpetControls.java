@@ -7,13 +7,13 @@ public class MagicCarpetControls extends NewRepeatedCommand {
     public enum CarpetDirection{
         FLY,
         FALL,
-        WAIT
+        WAIT,
         STOP
     }
 
     private final CarpetDirection direction;
     private final MagicCarpet carpet;
-    private final RPMChangeHolder holder;
+    private RPMChangeHolder holder;
     private final boolean auto;
 
     public MagicCarpetControls(CarpetDirection direction, RPMChangeHolder holder){
