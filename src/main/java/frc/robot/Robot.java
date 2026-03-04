@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.Optional;
+
 import org.photonvision.PhotonCamera;
 
 import com.revrobotics.spark.SparkMax;
@@ -14,6 +16,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -28,6 +31,7 @@ import frc.robot.command.DriveDistance;
 import frc.robot.command.RPMChangeHolder;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.util.Elastic;
 
 public class Robot extends TimedRobot {
@@ -103,7 +107,7 @@ public class Robot extends TimedRobot {
   }
 
   public Robot() {
-    // Shuffleboard.getTab("Teleoperated").addCamera("DriverCamera", "testCamera","http://10.20.77.200:1181/stream.mjpg");
+    Shuffleboard.getTab("Teleoperated").addCamera("DriverCamera", "testCamera","http://10.20.77.200:1181/stream.mjpg");
     Shuffleboard.getTab("Teleoperated").addCamera("Limelight", "FrontCamera", "http://10.20.77.20:5800");
 
     // m_robotContainer = new RobotContainer();
@@ -112,7 +116,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
-    RobotController.getBatteryVoltage();
+    voltage = RobotController.getBatteryVoltage();
     // Do this in either robot periodic or subsystem periodic
     
     SmartDashboard.putNumber("Match Timer", Timer.getMatchTime());
@@ -133,9 +137,6 @@ public class Robot extends TimedRobot {
     m_field.setRobotPose(pose);
   }
 
-  public void switchTab(){
-    Elastic.selectTab("Field");
-  }
 
   @Override
   public void disabledInit() {}
@@ -201,3 +202,62 @@ public class Robot extends TimedRobot {
   @Override
   public void simulationPeriodic() {}
 }
+
+// public boolean isHubActive() {
+//   Optional<Red> alliance = DriverStation.getAlliance();
+//   // If we have no alliance, we cannot be enabled, therefore no hub.
+//   if (alliance.isEmpty()) {
+//     return false;
+//   }
+//   // Hub is always enabled in autonomous.
+//   if (DriverStation.isAutonomousEnabled()) {
+//     return true;
+//   }
+//   // At this point, if we're not teleop enabled, there is no hub.
+//   if (!DriverStation.isTeleopEnabled()) {
+//     return false;
+//   }
+
+//   // We're teleop enabled, compute.
+//   double matchTime = DriverStation.getMatchTime();
+//   String gameData = DriverStation.getGameSpecificMessage();
+//   // If we have no game data, we cannot compute, assume hub is active, as its likely early in teleop.
+//   if (gameData.isEmpty()) {
+//     return true;
+//   }
+//   boolean redInactiveFirst = false;
+//   switch (gameData.charAt(0)) {
+//     case 'R' -> redInactiveFirst = true;
+//     case 'B' -> redInactiveFirst = false;
+//     default -> {
+//       // If we have invalid game data, assume hub is active.
+//       return true;
+//     }
+//   }
+
+//   // Shift was is active for blue if red won auto, or red if blue won auto.
+//   boolean shift1Active = switch (alliance.get()) {
+//     case Red -> !redInactiveFirst;
+//     case Blue -> redInactiveFirst;
+//   };
+
+//   if (matchTime > 130) {
+//     // Transition shift, hub is active.
+//     return true;
+//   } else if (matchTime > 105) {
+//     // Shift 1
+//     return shift1Active;
+//   } else if (matchTime > 80) {
+//     // Shift 2
+//     return !shift1Active;
+//   } else if (matchTime > 55) {
+//     // Shift 3
+//     return shift1Active;
+//   } else if (matchTime > 30) {
+//     // Shift 4
+//     return !shift1Active;
+//   } else {
+//     // End game, hub always active.
+//     return true;
+//   }
+// }

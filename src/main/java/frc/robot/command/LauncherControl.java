@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.RobotHardware;
 import frc.robot.subsystems.LauncherOperations;
+import frc.robot.subsystems.MagicCarpet;
 // import frc.robot.command.newRepeatedCommand;
 
 
@@ -45,7 +46,7 @@ public class LauncherControl extends NewRepeatedCommand{
     public void execute() {
         if(!isChanger){
             launcher.startMoveTest(holder.getTargetRPM());
-        }
+        }   
     }
 
     @Override

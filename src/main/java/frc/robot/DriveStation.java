@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.command.*;
 import frc.robot.command.ChangeCentricityControl.Directionality;
+import frc.robot.command.ElasticVisualsControl.SwitchTo;
 import frc.robot.command.RoombaControls.RoombaDirection;
 import frc.robot.command.MagicCarpetControls.CarpetDirection;
 import frc.robot.control.DriveJoystick;
@@ -33,6 +34,7 @@ import frc.robot.subsystems.ChangeCentricity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Roomba;
 import frc.robot.subsystems.MagicCarpet;
+import frc.robot.Robot;
 import frc.robot.util.Elastic;
 
 /**
@@ -124,22 +126,22 @@ public class DriveStation {
         // RPMChangeHolder holder3 = new RPMChangeHolder(4000);
 
 
+
         new LauncherControl(holder).bind(new JoystickButton(secondary, 5));
         new LauncherControl(holder).bind(new JoystickButton(secondary, 1));
-        new LauncherControl(250 , holder).bind(new JoystickButton(secondary, 2));
-        new LauncherControl(-250 , holder).bind(new JoystickButton(secondary, 6));
-        // new LauncherControl(holder2).bind(new JoystickButton(secondary, 10));
-        // new LauncherControl(holder3).bind(new JoystickButton(secondary, 6));
-        // new LauncherControl(250, holder).bind(new JoystickButton(secondary, 2));
-        // new LauncherControl(-250, holder).bind(new JoystickButton(secondary, 6));
+        new LauncherControl(250 , holder).bind(new JoystickButton(secondary, 3));
+        new LauncherControl(-250 , holder).bind(new JoystickButton(secondary, 4));
 
-        new RoombaControls(RoombaDirection.START).bind(new JoystickButton(secondary,3));
+        new RoombaControls(RoombaDirection.START).bind(new JoystickButton(secondary,2));
         new RoombaControls(RoombaDirection.REVERSE).bind(new JoystickButton(secondary,7));
 
         new MagicCarpetControls(CarpetDirection.FALL).bind(new JoystickButton(secondary,4));
         new MagicCarpetControls(CarpetDirection.FLY).bind(new JoystickButton(secondary,8));
         new MagicCarpetControls(CarpetDirection.FALL).bind(new JoystickButton(secondary,1));
-        
+
+        new ElasticVisualsControl(SwitchTo.MAIN).bind(new JoystickButton(secondary, 9));
+        new ElasticVisualsControl(SwitchTo.FIELD).bind(new JoystickButton(secondary, 10));
+
     
 
 
