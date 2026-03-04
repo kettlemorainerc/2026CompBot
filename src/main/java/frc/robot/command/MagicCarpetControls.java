@@ -6,15 +6,18 @@ import frc.robot.subsystems.MagicCarpet;
 public class MagicCarpetControls extends NewRepeatedCommand {
     public enum CarpetDirection{
         FLY,
-        FALL
+        FALL,
+        WAIT
     }
 
     private final CarpetDirection direction;
     private final MagicCarpet carpet;
+    private final RPMChangeHolder holder;
 
-    public MagicCarpetControls(CarpetDirection direction){
+    public MagicCarpetControls(CarpetDirection direction, RPMChangeHolder holder){
         this.direction = direction;
         carpet = RobotHardware.getInstance().carpet;
+        this.holder = holder;
     }
 
 
@@ -25,6 +28,13 @@ public class MagicCarpetControls extends NewRepeatedCommand {
         }
         if(direction == CarpetDirection.FALL){
             carpet.carpetFall();
+        }
+        if(direction == CarpetDirection.WAIT){
+            if(holder.getTargetRPM() > RobotHardware.getInstance().leftLauncherMotor.getEncoder().getVelocity()) {
+            }
+            if(holder.getTargetRPM() <= RobotHardware.getInstance().leftLauncherMotor.getEncoder().getVelocity()) {
+                carpet.carpetFly();
+            }
         }
     }
 
