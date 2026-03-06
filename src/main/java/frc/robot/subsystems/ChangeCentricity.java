@@ -14,14 +14,18 @@ import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
+import java.util.Optional;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.DriveStation;
 import frc.robot.RobotHardware;
 import frc.robot.command.*;
 import frc.robot.control.DriveJoystick;
@@ -54,13 +58,21 @@ public class ChangeCentricity implements Subsystem{
     }
 
     public void setFieldCentric(){
-        System.out.println("I WAS CALLED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-        drivetrain.setControl(
-            fieldDrive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.25) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.25) // Drive left with negative X (left)
+        Optional<Alliance> ally = DriverStation.getAlliance();
+        if(ally.get() == Alliance.Blue){
+            drivetrain.setControl(
+                fieldDrive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.25) // Drive forward with negative Y (forward)
+                        .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.25) // Drive left with negative X (left)
+                        .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 1) // Drive counterclockwise with negative X (left)
+                );
+        }else if(ally.get() == Alliance.Red){
+            drivetrain.setControl(
+            fieldDrive.withVelocityX(driveNewJoystick.getLeftY() * MaxSpeed * 0.25) // Drive forward with negative Y (forward)
+                    .withVelocityY(driveNewJoystick.getLeftX() * MaxSpeed * 0.25) // Drive left with negative X (left)
                     .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 1) // Drive counterclockwise with negative X (left)
             );
-
+        }
+        
     }
 
     public void setRobotCentric(){
