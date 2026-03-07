@@ -5,9 +5,41 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Ball Sucker 3000 Start"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Ball Sucker 3000 Start"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Reverse Intake"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.0
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Stop Intake"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {

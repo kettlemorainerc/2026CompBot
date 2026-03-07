@@ -33,10 +33,10 @@ public class MagicCarpetControls extends NewRepeatedCommand {
     public void initialize(){
         switch (direction) {
             case FLY:
-                carpet.carpetFly();
+                carpet.carpetFall();
                 break;
             case FALL:
-                carpet.carpetFall();
+                carpet.carpetFly();
                 break;
             case STOP:
                 carpet.stopCarpet();
@@ -56,7 +56,7 @@ public class MagicCarpetControls extends NewRepeatedCommand {
             if(holder.getTargetRPM() > RobotHardware.getInstance().leftLauncherMotor.getEncoder().getVelocity()) {
             }
             if(holder.getTargetRPM() <= RobotHardware.getInstance().leftLauncherMotor.getEncoder().getVelocity()) {
-                carpet.carpetFly();
+                carpet.carpetFall();
             }
         }
     }
