@@ -63,13 +63,13 @@ public class ChangeCentricity implements Subsystem{
             drivetrain.setControl(
                 fieldDrive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
                         .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
-                        .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 1) // Drive counterclockwise with negative X (left)
+                        .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 2) // Drive counterclockwise with negative X (left)
                 );
         }else if(ally.get() == Alliance.Red){
             drivetrain.setControl(
             fieldDrive.withVelocityX(driveNewJoystick.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
                     .withVelocityY(driveNewJoystick.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
-                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 1) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 2) // Drive counterclockwise with negative X (left)
             );
         }
         
@@ -79,15 +79,15 @@ public class ChangeCentricity implements Subsystem{
         drivetrain.setControl(
             robotDrive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
                     .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
-                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 1) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 2) // Drive counterclockwise with negative X (left)
             );
     }
 
     public void setBackwards(){
         drivetrain.setControl(
-            robotDrive.withVelocityX(driveNewJoystick.getLeftY() * MaxSpeed * 0.25) // Drive forward with negative Y (forward)
-                    .withVelocityY(driveNewJoystick.getLeftX() * MaxSpeed * 0.25) // Drive left with negative X (left)
-                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 0.5) // Drive counterclockwise with negative X (left)
+            robotDrive.withVelocityX(driveNewJoystick.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
+                    .withVelocityY(driveNewJoystick.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
+                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 2) // Drive counterclockwise with negative X (left)
             );
     }
 
