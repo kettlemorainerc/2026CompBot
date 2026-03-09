@@ -137,7 +137,7 @@ public class DriveStation {
 
         new MagicCarpetControls(CarpetDirection.FALL, holder).bind(new JoystickButton(secondary,7));
         new MagicCarpetControls(CarpetDirection.FLY, holder).bind(new JoystickButton(secondary,8));
-        new MagicCarpetControls(CarpetDirection.WAIT, holder).bind(new JoystickButton(secondary,1));
+        new MagicCarpetControls(CarpetDirection.FALL, holder).bind(new JoystickButton(secondary,1));
 
         new ElasticVisualsControl(SwitchTo.MAIN).bind(new JoystickButton(secondary, 9));
         new ElasticVisualsControl(SwitchTo.FIELD).bind(new JoystickButton(secondary, 10));
