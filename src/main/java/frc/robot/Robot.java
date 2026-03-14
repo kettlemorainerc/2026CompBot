@@ -34,6 +34,8 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.util.Elastic;
+import frc.robot.LimelightHelpers;
+import frc.robot.LimelightHelpers.PoseEstimate;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -53,8 +55,7 @@ public class Robot extends TimedRobot {
 
 
   public static final Field2d m_field = new Field2d();
-  PhotonCamera camera = new PhotonCamera("Camera_Module_v1");
-  // Limelight camera2 = new Limelight("test");
+  //PhotonCamera camera = new PhotonCamera("Camera_Module_v1");
   private SparkMax leftLaucherMotor;
 
 
@@ -127,18 +128,27 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Battery Voltage", voltage);
     SmartDashboard.putData("PID", pidhurtsmyhead);
 
+  // Elastic Field with photonvision
 
-    var results = camera.getAllUnreadResults();
-    for (var result : results) {
-      var multiTagResult = result.getMultiTagResult();
-      if (multiTagResult.isPresent()) {
-        var fieldToCamera = multiTagResult.get().estimatedPose.best;
-        //m_field.setRobotPose(new Pose2d(fieldToCamera.getX(),fieldToCamera.getY(), fieldToCamera.getRotation().toRotation2d()));
-      }
-    }
-    var state = drivetrain.getState();
-    Pose2d pose = state.Pose;
-    m_field.setRobotPose(pose);
+  //   var results = camera.getAllUnreadResults();
+  //   for (var result : results) {
+  //     var multiTagResult = result.getMultiTagResult();
+  //     if (multiTagResult.isPresent()) {
+  //       var fieldToCamera = multiTagResult.get().estimatedPose.best;
+  //       m_field.setRobotPose(new Pose2d(fieldToCamera.getX(),fieldToCamera.getY(), fieldToCamera.getRotation().toRotation2d()));
+  //     }
+  //   }
+  //   var state = drivetrain.getState();
+  //   Pose2d pose = state.Pose;
+  //   m_field.setRobotPose(pose);
+
+  // Elastic Field with limelight
+
+      PoseEstimate botPose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+      m_field.setRobotPose(botPose.pose);
+
+
+
   }
 
 
