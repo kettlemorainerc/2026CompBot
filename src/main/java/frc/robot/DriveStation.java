@@ -30,6 +30,7 @@ import frc.robot.control.DriveJoystick;
 import frc.robot.control.DriveStick;
 import frc.robot.control.DriveXboxController;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.AlignToAprilTags;
 import frc.robot.subsystems.ChangeCentricity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Roomba;
@@ -111,6 +112,9 @@ public class DriveStation {
     private static void bindDriverControl(RobotHardware hardware, DriveXboxController primary) {
         new ChangeCentricityControl(Directionality.FIELD).bind(new JoystickButton(primary, 6));
         new ChangeCentricityControl(Directionality.BACKWARDS).bind(new JoystickButton(primary, 3));
+        new ShakerControl().bind(new JoystickButton(primary, 4));
+        // new AlignToAprilTags().bind(new JoystickButton(primary, DRIVE_JOYSTICK_PORT));
+        // sgijrgirgirgjirgjr
         // new ChangeCentricityControl().bind(new JoystickButton((GenericHID) primary, 0));
         
     }
@@ -126,7 +130,7 @@ public class DriveStation {
         // RPMChangeHolder holder3 = new RPMChangeHolder(4000);
 
 
-
+        new PIDHURTSMYHEAD().bind(new JoystickButton(secondary, 20));
         new LauncherControl(holder).bind(new JoystickButton(secondary, 5));
         new LauncherControl(holder).bind(new JoystickButton(secondary, 1));
         new LauncherControl(250 , holder).bind(new JoystickButton(secondary, 3));
@@ -142,21 +146,13 @@ public class DriveStation {
         new ElasticVisualsControl(SwitchTo.MAIN).bind(new JoystickButton(secondary, 9));
         new ElasticVisualsControl(SwitchTo.FIELD).bind(new JoystickButton(secondary, 10));
 
-    
-
-
-        // new LauncherControl(250, holder).bind(new JoystickButton(secondary, 1));
-        // new LauncherControl(-250, holder).bind(new JoystickButton(secondary, 3));
-
-
-
-
-
+        new AlignToAprilTags().bind(new JoystickButton(secondary, 20));
 
         // new LaucherControl(2000).bind(new JoystickButton(secondary, 2));
         // new ChangeCentricityControl().bind(new JoystickButton(secondary, 2));
         // final TestControl testControl = new TestControl();
         //testControl.bind(new JoystickButton(secondary,1));
+      
     }
 
 
@@ -203,9 +199,9 @@ public class DriveStation {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.25) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.25) // Drive left with negative X (left)
-                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 1) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
+                    .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
+                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 2) // Drive counterclockwise with negative X (left)
             )
         );
 

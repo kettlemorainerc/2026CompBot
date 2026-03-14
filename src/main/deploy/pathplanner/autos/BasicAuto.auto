@@ -11,12 +11,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "test shoot"
-          }
-        },
-        {
           "type": "wait",
           "data": {
             "waitTime": 1.5

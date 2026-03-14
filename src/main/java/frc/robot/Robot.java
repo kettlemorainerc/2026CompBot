@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.command.DriveDistance;
+import frc.robot.command.PIDHURTSMYHEAD;
 import frc.robot.command.RPMChangeHolder;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -39,6 +40,7 @@ public class Robot extends TimedRobot {
   private AutonomousContol m_AutonomousContol;
   private DriveStation driveStation;
   private RobotHardware hardware;
+  private PIDHURTSMYHEAD pidhurtsmyhead;
   private final Command testAuto = new DriveDistance();
   double timeRemaining = Timer.getMatchTime();
   double voltage = RobotController.getBatteryVoltage();
@@ -64,6 +66,7 @@ public class Robot extends TimedRobot {
     driveStation = new DriveStation(hardware);
     m_AutonomousContol  = new AutonomousContol();
     drivetrain = RobotHardware.getInstance().drivetrain;
+    pidhurtsmyhead = new PIDHURTSMYHEAD();
 
 // TODO: THIS IS FINE, WE WILL MOVE THIS
 
@@ -122,6 +125,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Match Timer", Timer.getMatchTime());
     SmartDashboard.putNumber("Motor Rpm", leftLaucherMotor.getEncoder().getVelocity());
     SmartDashboard.putNumber("Battery Voltage", voltage);
+    SmartDashboard.putData("PID", pidhurtsmyhead);
 
 
     var results = camera.getAllUnreadResults();
