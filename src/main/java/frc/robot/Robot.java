@@ -32,6 +32,7 @@ import frc.robot.command.PIDHURTSMYHEAD;
 import frc.robot.command.RPMChangeHolder;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.FieldLocationsHelper;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.util.Elastic;
 import frc.robot.LimelightHelpers;
@@ -138,16 +139,19 @@ public class Robot extends TimedRobot {
   //       m_field.setRobotPose(new Pose2d(fieldToCamera.getX(),fieldToCamera.getY(), fieldToCamera.getRotation().toRotation2d()));
   //     }
   //   }
-  //   var state = drivetrain.getState();
-  //   Pose2d pose = state.Pose;
-  //   m_field.setRobotPose(pose);
+
+
+  
+    var state = drivetrain.getState();
+    Pose2d pose = state.Pose;
+    m_field.setRobotPose(pose);
 
   // Elastic Field with limelight
 
-      PoseEstimate botPose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-      m_field.setRobotPose(botPose.pose);
+      m_field.setRobotPose(FieldLocationsHelper.getRobotFieldPose());
 
-
+      // System.out.println(FieldLocationsHelper.getRobotFieldPose().getMeasureX().toLongString());
+      // System.out.println(FieldLocationsHelper.getDistanceFromRobot(new Pose2d(0,0,new Rotation2d(0))).toLongString());
 
   }
 

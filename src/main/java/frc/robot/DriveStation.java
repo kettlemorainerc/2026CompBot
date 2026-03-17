@@ -146,7 +146,7 @@ public class DriveStation {
         new ElasticVisualsControl(SwitchTo.MAIN).bind(new JoystickButton(secondary, 9));
         new ElasticVisualsControl(SwitchTo.FIELD).bind(new JoystickButton(secondary, 10));
 
-        new AlignToAprilTags().bind(new JoystickButton(secondary, 20));
+        // new AlignToAprilTags().bind(new JoystickButton(secondary, 20));
 
         // new LaucherControl(2000).bind(new JoystickButton(secondary, 2));
         // new ChangeCentricityControl().bind(new JoystickButton(secondary, 2));
