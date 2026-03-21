@@ -26,8 +26,8 @@ public class Shaker{
 
     public void Shake(){
         drivetrain.setControl(
-                drive.withVelocityX(2) // Drive forward with negative Y (forward)
-                        .withVelocityY(0) // Drive left with negative X (left)
+                drive.withVelocityX(0) // Drive forward with negative Y (forward)
+                        .withVelocityY(2) // Drive left with negative X (left)
                         .withRotationalRate(0) // Drive counterclockwise with negative X (left)
                 );
 
@@ -35,8 +35,8 @@ public class Shaker{
 
     public void Unshake(){
                 drivetrain.setControl(
-                drive.withVelocityX(-2) // Drive forward with negative Y (forward)
-                        .withVelocityY(0) // Drive left with negative X (left)
+                drive.withVelocityX(0) // Drive forward with negative Y (forward)
+                        .withVelocityY(-2) // Drive left with negative X (left)
                         .withRotationalRate(0) // Drive counterclockwise with negative X (left)
                 );
     }

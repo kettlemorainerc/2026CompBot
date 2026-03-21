@@ -3,6 +3,7 @@ package frc.robot.command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.RobotHardware;
+import frc.robot.subsystems.LauncherCalculator;
 import frc.robot.subsystems.LauncherOperations;
 import frc.robot.subsystems.MagicCarpet;
 // import frc.robot.command.newRepeatedCommand;
@@ -14,16 +15,18 @@ import frc.robot.subsystems.MagicCarpet;
 
 public class LauncherControl extends NewRepeatedCommand{
     private final LauncherOperations launcher;
-    private final int changeByRPM;
+    private final double changeByRPM;
     private final RPMChangeHolder holder;
     private final boolean isChanger;
     private final boolean auto;
+    private final boolean isSetter;
 
-    public LauncherControl(int rpm, RPMChangeHolder holder){
+    public LauncherControl(Double rpm, RPMChangeHolder holder, boolean set){
         this.launcher = RobotHardware.getInstance().launcherOperations;
         this.changeByRPM = rpm;
         this.holder = holder;
-        this.isChanger = true;
+        this.isChanger = !set;
+        this.isSetter = set;
         this.auto = false;
     }
 
@@ -32,6 +35,7 @@ public class LauncherControl extends NewRepeatedCommand{
         this.changeByRPM = 0;
         this.holder = holder;
         this.isChanger = false;
+        this.isSetter = false;
         this.auto = false;
     }
 
@@ -40,6 +44,7 @@ public class LauncherControl extends NewRepeatedCommand{
         this.changeByRPM = 0;
         this.holder = holder;
         this.isChanger = false;
+        this.isSetter = false;
         this.auto = auto;
     }
     
@@ -48,16 +53,20 @@ public class LauncherControl extends NewRepeatedCommand{
     public void initialize(){
         if(isChanger){
             holder.changeRPMTarget(changeByRPM);
-        } else {
+        } else if(isSetter){
+            holder.setRPMTarget(changeByRPM);
+        }else   {
             launcher.startMoveTest(holder.getTargetRPM());
         }
     }
 
     @Override
     public void execute() {
-        if(!isChanger){
+        if(!isChanger && !isSetter){
             launcher.startMoveTest(holder.getTargetRPM());
-        }   
+        }else if(isSetter){
+            holder.setRPMTarget(LauncherCalculator.getRPMFromDistance());
+        }
     }
 
     @Override

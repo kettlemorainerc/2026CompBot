@@ -5,6 +5,7 @@
 package frc.robot;
 
 import java.util.Optional;
+import java.util.Random;
 
 import org.photonvision.PhotonCamera;
 
@@ -13,6 +14,13 @@ import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.networktables.FloatEntry;
+import edu.wpi.first.networktables.FloatPublisher;
+import edu.wpi.first.networktables.FloatSubscriber;
+import edu.wpi.first.networktables.FloatTopic;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
@@ -28,7 +36,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.command.DriveDistance;
-import frc.robot.command.PIDHURTSMYHEAD;
 import frc.robot.command.RPMChangeHolder;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -40,14 +47,22 @@ public class Robot extends TimedRobot {
   private AutonomousContol m_AutonomousContol;
   private DriveStation driveStation;
   private RobotHardware hardware;
-  private PIDHURTSMYHEAD pidhurtsmyhead;
   private final Command testAuto = new DriveDistance();
   double timeRemaining = Timer.getMatchTime();
   double voltage = RobotController.getBatteryVoltage();
   private CommandSwerveDrivetrain drivetrain;
+  int tick;
 
 
-  private int autoTick;
+  Random random = new Random();
+
+
+  private double oldP1 = 0;
+  private double oldP2 = 0;
+  private double oldI1 = 0;
+  private double oldI2 = 0;
+  private double oldD1 = 0;
+  private double oldD2 = 0;
 
   private double testdirection;
 
@@ -66,7 +81,11 @@ public class Robot extends TimedRobot {
     driveStation = new DriveStation(hardware);
     m_AutonomousContol  = new AutonomousContol();
     drivetrain = RobotHardware.getInstance().drivetrain;
-    pidhurtsmyhead = new PIDHURTSMYHEAD();
+
+
+    this.drivetrain = RobotHardware.getInstance().drivetrain;
+
+    
 
 // TODO: THIS IS FINE, WE WILL MOVE THIS
 
@@ -101,7 +120,15 @@ public class Robot extends TimedRobot {
   // }
     // Do this in either robot or subsystem init
     SmartDashboard.putData("Field", m_field);
+    SmartDashboard.putNumber("P1", 0);
+    SmartDashboard.putNumber("I1", 0);
+    SmartDashboard.putNumber("D1", 0);
+    SmartDashboard.putNumber("P2", 0);
+    SmartDashboard.putNumber("I2", 0);
+    SmartDashboard.putNumber("D2", 0);
 
+    
+    
     // ADDDDD elastic widget for motor rpm
     
     
@@ -125,8 +152,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Match Timer", Timer.getMatchTime());
     SmartDashboard.putNumber("Motor Rpm", leftLaucherMotor.getEncoder().getVelocity());
     SmartDashboard.putNumber("Battery Voltage", voltage);
-    SmartDashboard.putData("PID", pidhurtsmyhead);
-
+    // SmartDashboard.putData("PID", pidhurtsmyhead);
 
     var results = camera.getAllUnreadResults();
     for (var result : results) {
@@ -139,14 +165,52 @@ public class Robot extends TimedRobot {
     var state = drivetrain.getState();
     Pose2d pose = state.Pose;
     m_field.setRobotPose(pose);
+
+    if(SmartDashboard.getNumber("P1", 0) != oldP1){
+      drivetrain.configureAuto(SmartDashboard.getNumber("P1", 0), SmartDashboard.getNumber("I1", 0), SmartDashboard.getNumber("D1", 0), SmartDashboard.getNumber("P2", 0), SmartDashboard.getNumber("I2", 0), SmartDashboard.getNumber("D2", 0));
+      m_AutonomousContol.registerCommands();
+      oldP1 = SmartDashboard.getNumber("P1", 0);
+    }
+    if(SmartDashboard.getNumber("P2", 0) != oldP2){
+      drivetrain.configureAuto(SmartDashboard.getNumber("P1", 0), SmartDashboard.getNumber("I1", 0), SmartDashboard.getNumber("D1", 0), SmartDashboard.getNumber("P2", 0), SmartDashboard.getNumber("I2", 0), SmartDashboard.getNumber("D2", 0));
+      m_AutonomousContol.registerCommands();
+      oldP2 = SmartDashboard.getNumber("P2", 0);
+    }
+    if(SmartDashboard.getNumber("I1", 0) != oldI1){
+      drivetrain.configureAuto(SmartDashboard.getNumber("P1", 0), SmartDashboard.getNumber("I1", 0), SmartDashboard.getNumber("D1", 0), SmartDashboard.getNumber("P2", 0), SmartDashboard.getNumber("I2", 0), SmartDashboard.getNumber("D2", 0));
+      m_AutonomousContol.registerCommands();
+      oldI1 = SmartDashboard.getNumber("I1", 0);
+    }
+    if(SmartDashboard.getNumber("I2", 0) != oldI2){
+      drivetrain.configureAuto(SmartDashboard.getNumber("P1", 0), SmartDashboard.getNumber("I1", 0), SmartDashboard.getNumber("D1", 0), SmartDashboard.getNumber("P2", 0), SmartDashboard.getNumber("I2", 0), SmartDashboard.getNumber("D2", 0));
+      m_AutonomousContol.registerCommands();
+      oldI2 = SmartDashboard.getNumber("I2", 0);
+    }
+    if(SmartDashboard.getNumber("D1", 0) != oldD1){
+      drivetrain.configureAuto(SmartDashboard.getNumber("P1", 0), SmartDashboard.getNumber("I1", 0), SmartDashboard.getNumber("D1", 0), SmartDashboard.getNumber("P2", 0), SmartDashboard.getNumber("I2", 0), SmartDashboard.getNumber("D2", 0));
+      m_AutonomousContol.registerCommands();
+      oldD1 = SmartDashboard.getNumber("D1", 0);
+    }
+    if(SmartDashboard.getNumber("D2", 0) != oldD2){
+      drivetrain.configureAuto(SmartDashboard.getNumber("P1", 0), SmartDashboard.getNumber("I1", 0), SmartDashboard.getNumber("D1", 0), SmartDashboard.getNumber("P2", 0), SmartDashboard.getNumber("I2", 0), SmartDashboard.getNumber("D2", 0));
+      m_AutonomousContol.registerCommands();
+      oldD2 = SmartDashboard.getNumber("D2", 0);
+    }
   }
 
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    tick = 0;
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    tick++;
+    if(tick % 100 == 0){
+      // drivetrain.configureAuto(SmartDashboard.getNumber("P1", 0), SmartDashboard.getNumber("I1", 0), SmartDashboard.getNumber("D1", 0), SmartDashboard.getNumber("P2", 0), SmartDashboard.getNumber("I2", 0), SmartDashboard.getNumber("D2", 0));
+    }
+  }
 
   @Override
   public void disabledExit() {}
@@ -187,7 +251,8 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+  }
 
   @Override
   public void teleopExit() {}

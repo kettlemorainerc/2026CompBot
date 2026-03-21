@@ -63,6 +63,7 @@ public class ChangeCentricity implements Subsystem{
             fieldDrive.withVelocityX(driveNewJoystick.getLeftY() * MaxSpeed * 0.25) // Drive forward with negative Y (forward)
                     .withVelocityY(driveNewJoystick.getLeftX() * MaxSpeed * 0.25) // Drive left with negative X (left)
                     .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 1) // Drive counterclockwise with negative X (left)
+        );
         Optional<Alliance> ally = DriverStation.getAlliance();
         if(ally.get() == Alliance.Blue){
             drivetrain.setControl(
