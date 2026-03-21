@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import java.lang.reflect.Field;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.LimelightHelpers;
@@ -43,13 +44,50 @@ public class FieldLocationsHelper implements Subsystem {
         }
     }
 
-    public Distance getDistanceFromRobot(Pose2d targetPose) {
-        Pose2d robotPose = getRobotFieldPose();
-        Double deltaX = targetPose.getX()-robotPose.getX();
-        Double deltaY = targetPose.getY()-robotPose.getY();
-        Double calculation = Math.sqrt(Math.pow(deltaX, 2)+Math.pow(deltaY,2));
+    public static class AngleDistance{
+        public double fieldDifferenceAngle;
+        public double robotDifferenceAngle;
+        public Distance distance;
 
-        return targetPose.getMeasureX().unit().of(calculation); 
+        public AngleDistance(double fieldDifferenceAngle, double robotDifferenceAngle, Distance distance){
+            this.fieldDifferenceAngle = fieldDifferenceAngle;
+            this.robotDifferenceAngle = robotDifferenceAngle;
+            this.distance = distance;
+        }
     }
+
+    public static AngleDistance getDifferencePoseFromRobot(Pose2d targetPose) {
+        Pose2d robotPose = getRobotFieldPose();
+
+        double xT = targetPose.getX();
+        double yT = targetPose.getY();
+        double xR = robotPose.getX();
+        double yR = robotPose.getY();
+        double robotDegrees = robotPose.getRotation().getDegrees();
+
+
+        double deltaX = xT-xR;
+        double deltaY = yT-yR;
+
+        double hypotenuse = Math.sqrt(Math.pow(deltaX, 2)+Math.pow(deltaY,2));
+        Distance distance = targetPose.getMeasureX().unit().of(hypotenuse);
+
+        double fieldDifferenceAngle = Math.atan2(xT-xR,yT-yR) *180/Math.PI;
+
+
+
+
+        double robotDifferenceAngle = fieldDifferenceAngle - robotDegrees + 270;
+
+        System.out.println("Robo Degree: "+robotDegrees);
+
+        return new AngleDistance(fieldDifferenceAngle, robotDifferenceAngle, distance); 
+    }
+
+    // public  findQuadrantFromTarget(Pose2d targetPose) {
+
+    // }
+
+
 
 }

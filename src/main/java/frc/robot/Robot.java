@@ -4,39 +4,28 @@
 
 package frc.robot;
 
-import java.util.Optional;
-
-import org.photonvision.PhotonCamera;
+import static edu.wpi.first.units.Units.Meters;
 
 import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.command.DriveDistance;
 import frc.robot.command.PIDHURTSMYHEAD;
-import frc.robot.command.RPMChangeHolder;
-import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.FieldLocationsHelper;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.util.Elastic;
-import frc.robot.LimelightHelpers;
-import frc.robot.LimelightHelpers.PoseEstimate;
+import frc.robot.subsystems.FieldLocationsHelper.AngleDistance;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -56,6 +45,8 @@ public class Robot extends TimedRobot {
 
 
   public static final Field2d m_field = new Field2d();
+  public static final Field2d t_field = new Field2d();
+
   //PhotonCamera camera = new PhotonCamera("Camera_Module_v1");
   private SparkMax leftLaucherMotor;
 
@@ -107,7 +98,8 @@ public class Robot extends TimedRobot {
     // ADDDDD elastic widget for motor rpm
     
     
-
+    SmartDashboard.putData("TargetPoseField", t_field);
+    t_field.setRobotPose(new Pose2d(Meters.of(12), Meters.of(4), new Rotation2d()));
 
   }
 
@@ -152,6 +144,14 @@ public class Robot extends TimedRobot {
 
       // System.out.println(FieldLocationsHelper.getRobotFieldPose().getMeasureX().toLongString());
       // System.out.println(FieldLocationsHelper.getDistanceFromRobot(new Pose2d(0,0,new Rotation2d(0))).toLongString());
+
+      Pose2d targetPose = t_field.getRobotPose();
+
+
+      AngleDistance ad = FieldLocationsHelper.getDifferencePoseFromRobot(targetPose);
+      System.out.println("FDA: "+ad.fieldDifferenceAngle);
+      System.out.println("robotDifferenceAngle: "+ad.robotDifferenceAngle);
+
 
   }
 

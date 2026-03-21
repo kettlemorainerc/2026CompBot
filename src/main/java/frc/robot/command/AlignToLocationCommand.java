@@ -10,6 +10,8 @@ import frc.robot.subsystems.MagicCarpet;
 
 public class AlignToLocationCommand extends NewRepeatedCommand{
 
+    // DriveTrain
+
     double targetX;
     double targetY;
 
@@ -26,7 +28,11 @@ public class AlignToLocationCommand extends NewRepeatedCommand{
 
     @Override
     public void execute() {
-
+        // drivetrain.setControl(
+        //         drive.withVelocityX(2) // Drive forward with negative Y (forward)
+        //                 .withVelocityY(0) // Drive left with negative X (left)
+        //                 .withRotationalRate(0) // Drive counterclockwise with negative X (left)
+        //         );
     }
 
     @Override
