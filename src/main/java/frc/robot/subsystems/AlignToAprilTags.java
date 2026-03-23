@@ -4,11 +4,14 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.LimelightHelpers;
 import frc.robot.RobotHardware;
 import frc.robot.command.NewRepeatedCommand;
 import frc.robot.generated.TunerConstants;
 
+import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
@@ -36,9 +39,15 @@ public class AlignToAprilTags extends NewRepeatedCommand{
     // if the robot never turns in the correct direction, kP should be inverted.
     double kP = .035;
 
+    double angleFromTarget = FieldLocationsHelper.getDifferencePoseFromRobot(new Pose2d(Meters.of(12), Meters.of(4), new Rotation2d())).robotDifferenceAngle;
+    if(angleFromTarget > 180){
+      angleFromTarget = (angleFromTarget - 360);
+    }
+    System.out.println(angleFromTarget);
+
     // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
     // your limelight 3 feed, tx should return roughly 31 degrees.
-    double targetingAngularVelocity = LimelightHelpers.getTX("limelight") * kP;
+    double targetingAngularVelocity = (angleFromTarget) * kP;
 
     // convert to radians per second for our drive method
     targetingAngularVelocity *= drivetrain.MaxAngularRate;

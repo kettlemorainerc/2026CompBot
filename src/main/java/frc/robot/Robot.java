@@ -153,7 +153,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Match Timer", Timer.getMatchTime());
     SmartDashboard.putNumber("Motor Rpm", leftLaucherMotor.getEncoder().getVelocity());
     SmartDashboard.putNumber("Battery Voltage", voltage);
-    SmartDashboard.putData("PID", pidhurtsmyhead);
+    //SmartDashboard.putData("PID", pidhurtsmyhead);
 
   // Elastic Field with photonvision
 
@@ -213,7 +213,7 @@ public class Robot extends TimedRobot {
 
 
       AngleDistance ad = FieldLocationsHelper.getDifferencePoseFromRobot(targetPose);
-      System.out.println("FDA: "+ad.fieldDifferenceAngle);
+      // System.out.println("FDA: "+ad.fieldDifferenceAngle);
       System.out.println("robotDifferenceAngle: "+ad.robotDifferenceAngle);
 
 

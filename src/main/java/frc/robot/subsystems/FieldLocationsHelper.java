@@ -79,7 +79,7 @@ public class FieldLocationsHelper implements Subsystem {
 
         double robotDifferenceAngle = (fieldDifferenceAngle - robotDegrees + 270) % 360;
 
-        System.out.println("Robo Degree: "+robotDegrees);
+        // System.out.println("Robo Degree: "+robotDegrees);
 
         return new AngleDistance(fieldDifferenceAngle, robotDifferenceAngle, distance); 
     }
