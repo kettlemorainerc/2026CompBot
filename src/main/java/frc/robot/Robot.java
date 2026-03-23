@@ -105,8 +105,8 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     Shuffleboard.getTab("Teleoperated").addCamera("DriverCamera", "testCamera","http://10.20.77.200:1181/stream.mjpg");
-    Shuffleboard.getTab("Teleoperated").addCamera("Limelight", "FrontCamera", "http://10.20.77.20:5800");
-
+    Shuffleboard.getTab("Teleoperated").addCamera("Limelight", "FrontCamera", "http://10.20.77.20:5800");  //Would you like some marinara for you spagetti fine sir?
+   
     // m_robotContainer = new RobotContainer();
   }
 
@@ -191,7 +191,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousExit() {}
+  public void autonomousExit() { } // Cheese
 
   @Override
   public void teleopInit() {
