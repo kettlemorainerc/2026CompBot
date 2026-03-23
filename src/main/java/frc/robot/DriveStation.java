@@ -33,6 +33,8 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlignToAprilTags;
 import frc.robot.subsystems.ChangeCentricity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.EstimateDistance;
+import frc.robot.subsystems.LauncherCalculator;
 import frc.robot.subsystems.Roomba;
 import frc.robot.subsystems.MagicCarpet;
 import frc.robot.Robot;
@@ -113,6 +115,7 @@ public class DriveStation {
         new ChangeCentricityControl(Directionality.FIELD).bind(new JoystickButton(primary, 6));
         new ChangeCentricityControl(Directionality.BACKWARDS).bind(new JoystickButton(primary, 3));
         new ShakerControl().bind(new JoystickButton(primary, 4));
+        new AlignToAprilTags().bind(new JoystickButton(primary, 8));
         // new AlignToAprilTags().bind(new JoystickButton(primary, DRIVE_JOYSTICK_PORT));
         // sgijrgirgirgjirgjr
         // new ChangeCentricityControl().bind(new JoystickButton((GenericHID) primary, 0));
@@ -126,28 +129,32 @@ public class DriveStation {
 
 
         RPMChangeHolder holder = new RPMChangeHolder(3000);
+        RPMChangeHolder visionHolder = new RPMChangeHolder(3000);
         // RPMChangeHolder holder2 = new RPMChangeHolder(3000);
         // RPMChangeHolder holder3 = new RPMChangeHolder(4000);
 
 
-        new PIDHURTSMYHEAD().bind(new JoystickButton(secondary, 20));
+        // new PIDHURTSMYHEAD().bind(new JoystickButton(secondary, 19));
         new LauncherControl(holder).bind(new JoystickButton(secondary, 5));
-        new LauncherControl(holder).bind(new JoystickButton(secondary, 1));
-        new LauncherControl(250 , holder).bind(new JoystickButton(secondary, 3));
-        new LauncherControl(-250 , holder).bind(new JoystickButton(secondary, 4));
+        new LauncherControl(visionHolder).bind(new JoystickButton(secondary, 1));
+        new LauncherControl(175.0 , holder, false).bind(new JoystickButton(secondary, 3));
+        new LauncherControl(-175.0 , holder, false).bind(new JoystickButton(secondary, 4));
+        new LauncherControl(LauncherCalculator.getRPMFromDistance(), visionHolder, true).bind(new JoystickButton(secondary, 1));
+        
 
         new RoombaControls(RoombaDirection.START).bind(new JoystickButton(secondary,2));
         new RoombaControls(RoombaDirection.REVERSE).bind(new JoystickButton(secondary,6));
 
         new MagicCarpetControls(CarpetDirection.FALL, holder).bind(new JoystickButton(secondary,7));
         new MagicCarpetControls(CarpetDirection.FLY, holder).bind(new JoystickButton(secondary,8));
-        new MagicCarpetControls(CarpetDirection.WAIT, holder).bind(new JoystickButton(secondary,1));
+        new MagicCarpetControls(CarpetDirection.FALL, holder).bind(new JoystickButton(secondary,1));
 
         new ElasticVisualsControl(SwitchTo.MAIN).bind(new JoystickButton(secondary, 9));
         new ElasticVisualsControl(SwitchTo.FIELD).bind(new JoystickButton(secondary, 10));
 
         // new AlignToAprilTags().bind(new JoystickButton(secondary, 20));
 
+        new EstimateDistance().bind(new JoystickButton(secondary, 19));
         // new LaucherControl(2000).bind(new JoystickButton(secondary, 2));
         // new ChangeCentricityControl().bind(new JoystickButton(secondary, 2));
         // final TestControl testControl = new TestControl();

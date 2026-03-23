@@ -152,7 +152,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 this::getCurrentSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
                 (speeds, feedforwards) -> driveRobotRelative(speeds), // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds. Also optionally outputs individual module feedforwards
                 new PPHolonomicDriveController( // PPHolonomicController is the built in path following controller for holonomic drive trains
-                        new PIDConstants(1.0, 0.0, 0.0), // Translation PID constants
+                        new PIDConstants(1, 1.5, 0.01), // Translation PID constants
                         new PIDConstants(0.0, 0.0, 0.0) // Rotation PID constants
                 ),
                 config, // The robot configuration
@@ -408,7 +408,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public Pose2d getPose(){
         Pose2d pose = Robot.m_field.getRobotPose();
-        System.out.println(pose);
+        // System.out.println(pose);
         return pose;
     }
     
@@ -417,10 +417,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
     
     public void driveRobotRelative(ChassisSpeeds speeds){
-        System.out.println("I BE DOING A THING THAT DOES A THING TO HOPEFULLY WHEEL THE THING TO DOING THE THING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(speeds.vxMetersPerSecond);
-        System.out.println(speeds.vyMetersPerSecond);
-        System.out.println(speeds.omegaRadiansPerSecond);
+        // System.out.println("I BE DOING A THING THAT DOES A THING TO HOPEFULLY WHEEL THE THING TO DOING THE THING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        // System.out.println(speeds.vxMetersPerSecond);
+        // System.out.println(speeds.vyMetersPerSecond);
+        // System.out.println(speeds.omegaRadiansPerSecond);
         setControl(
                 drive.withVelocityX(speeds.vxMetersPerSecond) // Drive forward with negative Y (forward)
                     .withVelocityY(speeds.vyMetersPerSecond) // Drive left with negative X (left)
@@ -428,10 +428,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             );
     }
 
-    public void configureAuto(float p1, float i1, float d1, float p2, float i2, float d2){
+    public void configureAuto(double p1, double i1, double d1, double p2, double i2, double d2){
+        System.out.println(p1 + " " + p2 + " " + i1 + " " + i2 + " " + d1 + " " + d2 + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         RobotConfig config;
         try {
             config = RobotConfig.fromGUISettings();
+
+            AutoBuilder.resetForTesting();
 
             AutoBuilder.configure(
                 this::getPose, // Robot pose supplier
