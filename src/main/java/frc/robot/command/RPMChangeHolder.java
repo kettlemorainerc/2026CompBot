@@ -18,8 +18,10 @@ public class RPMChangeHolder{
         SmartDashboard.putNumber("Motor Max", targetRPM);
     }
     public void setRPMTarget(Double RPM){
-        this.targetRPM = RPM;
-        SmartDashboard.putNumber("Auto speed", targetRPM);
+        if(RPM >= 2251){
+            this.targetRPM = RPM;
+            SmartDashboard.putNumber("Auto speed", targetRPM);
+        }
     }
 
     public double getTargetRPM(){        

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.EstimateDistance;
 
@@ -14,9 +15,10 @@ public class LauncherCalculator {
         double distanceInMeters = targetPose.getZ(); 
         System.out.println(distanceInMeters);
 
+        SmartDashboard.putNumber("Distance", distanceInMeters);
         // Inputs
         double distanceToTarget = distanceInMeters; // meters
-        double launchAngleDegrees = 25.0; // degrees
+        double launchAngleDegrees = 35.0; // degrees
         double wheelDiameter = 0.1016; // 100mm, in meters
             
         // 1. Calculate Required Velocity (v)
@@ -32,7 +34,7 @@ public class LauncherCalculator {
         System.out.println("Required Velocity: " + String.format("%.2f", velocityRequired) + " m/s");
         System.out.println("Required RPM: " + String.format("%.0f", distanceRPM));
 
-        return distanceRPM + 2000;
+        return distanceRPM + 2250;
 
 
     }
