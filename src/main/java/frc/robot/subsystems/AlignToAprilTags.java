@@ -37,12 +37,12 @@ public class AlignToAprilTags extends NewRepeatedCommand{
     // if it is too high, the robot will oscillate around.
     // if it is too low, the robot will never reach its target
     // if the robot never turns in the correct direction, kP should be inverted.
-    double kP = .035;
+    double kP = .0035;
 
-    double angleFromTarget = FieldLocationsHelper.getDifferencePoseFromRobot(new Pose2d(Meters.of(12), Meters.of(4), new Rotation2d())).robotDifferenceAngle;
-    if(angleFromTarget > 180){
-      angleFromTarget = (angleFromTarget - 360);
-    }
+    double angleFromTarget = FieldLocationsHelper.getDifferencePoseFromRobot(FieldLocationsHelper.getHubTargetPosition()).robotDifferenceAngle;
+    // if(angleFromTarget > 180){
+    //   angleFromTarget = (angleFromTarget - 360);
+    // }
     System.out.println(angleFromTarget);
 
     // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
@@ -52,7 +52,6 @@ public class AlignToAprilTags extends NewRepeatedCommand{
     // convert to radians per second for our drive method
     targetingAngularVelocity *= drivetrain.MaxAngularRate;
 
-    //invert since tx is positive when the target is to the right of the crosshair
     targetingAngularVelocity *= -1.0;
 
     return targetingAngularVelocity;

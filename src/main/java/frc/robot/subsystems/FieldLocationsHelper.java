@@ -1,10 +1,15 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Meters;
+
 import java.lang.reflect.Field;
+import java.util.Optional;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.LimelightHelpers;
 import frc.robot.Robot;
@@ -82,6 +87,23 @@ public class FieldLocationsHelper implements Subsystem {
         // System.out.println("Robo Degree: "+robotDegrees);
 
         return new AngleDistance(fieldDifferenceAngle, robotDifferenceAngle, distance); 
+    }
+
+    public static Pose2d getHubTargetPosition(){
+        Optional<Alliance> alli = DriverStation.getAlliance();
+        if(!alli.isEmpty()){
+            if(alli.get() == DriverStation.Alliance.Red){
+                System.out.println("RED");
+                return new Pose2d(Meters.of(12), Meters.of(4), new Rotation2d());
+            }else{
+                System.out.println("BLUE");
+                return new Pose2d(Meters.of(4.5), Meters.of(4), new Rotation2d());
+            }
+        }else{
+            System.out.println("NO ALLIANCE");
+            return null;
+        }
+
     }
 
     // public  findQuadrantFromTarget(Pose2d targetPose) {

@@ -40,6 +40,9 @@ import frc.robot.command.PIDHURTSMYHEAD;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.FieldLocationsHelper;
 import frc.robot.subsystems.FieldLocationsHelper.AngleDistance;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.*;
+
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -127,14 +130,18 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("I2", 0);
     SmartDashboard.putNumber("D2", 0);
 
-    
-    
-    // ADDDDD elastic widget for motor rpm
-    
-    
     SmartDashboard.putData("TargetPoseField", t_field);
-    t_field.setRobotPose(new Pose2d(Meters.of(12), Meters.of(4), new Rotation2d()));
 
+
+    // Optional<Alliance> alliance = DriverStation.getAlliance();
+    // if(alliance.isEmpty()){
+    // }else if(alliance.get() == DriverStation.Alliance.Red){
+      t_field.setRobotPose(FieldLocationsHelper.getHubTargetPosition());
+    // }else if(alliance.get() == DriverStation.Alliance.Blue){
+    //   t_field.setRobotPose(new Pose2d(Meters.of(4.5), Meters.of(4), new Rotation2d()));
+    // }
+
+  
   }
 
   public Robot() {
@@ -153,6 +160,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Match Timer", Timer.getMatchTime());
     SmartDashboard.putNumber("Motor Rpm", leftLaucherMotor.getEncoder().getVelocity());
     SmartDashboard.putNumber("Battery Voltage", voltage);
+    t_field.setRobotPose(FieldLocationsHelper.getHubTargetPosition());
     //SmartDashboard.putData("PID", pidhurtsmyhead);
 
   // Elastic Field with photonvision
