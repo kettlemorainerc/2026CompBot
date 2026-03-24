@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.Random;
 
 import org.photonvision.PhotonCamera;
+import static edu.wpi.first.units.Units.Meters;
 
 import com.revrobotics.spark.SparkMax;
 
@@ -24,23 +25,21 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.FieldObject2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.command.DriveDistance;
 import frc.robot.command.RPMChangeHolder;
 import frc.robot.generated.TunerConstants;
+import frc.robot.command.PIDHURTSMYHEAD;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.util.Elastic;
+import frc.robot.subsystems.FieldLocationsHelper;
+import frc.robot.subsystems.FieldLocationsHelper.AngleDistance;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -68,8 +67,9 @@ public class Robot extends TimedRobot {
 
 
   public static final Field2d m_field = new Field2d();
-  PhotonCamera camera = new PhotonCamera("Camera_Module_v1");
-  // Limelight camera2 = new Limelight("test");
+  public static final Field2d t_field = new Field2d();
+
+  //PhotonCamera camera = new PhotonCamera("Camera_Module_v1");
   private SparkMax leftLaucherMotor;
 
 
@@ -132,14 +132,15 @@ public class Robot extends TimedRobot {
     // ADDDDD elastic widget for motor rpm
     
     
-
+    SmartDashboard.putData("TargetPoseField", t_field);
+    t_field.setRobotPose(new Pose2d(Meters.of(12), Meters.of(4), new Rotation2d()));
 
   }
 
   public Robot() {
     Shuffleboard.getTab("Teleoperated").addCamera("DriverCamera", "testCamera","http://10.20.77.200:1181/stream.mjpg");
-    Shuffleboard.getTab("Teleoperated").addCamera("Limelight", "FrontCamera", "http://10.20.77.20:5800");
-
+    Shuffleboard.getTab("Teleoperated").addCamera("Limelight", "FrontCamera", "http://10.20.77.20:5800");  //Would you like some marinara for you spagetti fine sir?
+   
     // m_robotContainer = new RobotContainer();
   }
 
@@ -152,16 +153,21 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Match Timer", Timer.getMatchTime());
     SmartDashboard.putNumber("Motor Rpm", leftLaucherMotor.getEncoder().getVelocity());
     SmartDashboard.putNumber("Battery Voltage", voltage);
-    // SmartDashboard.putData("PID", pidhurtsmyhead);
+    SmartDashboard.putData("PID", pidhurtsmyhead);
 
-    var results = camera.getAllUnreadResults();
-    for (var result : results) {
-      var multiTagResult = result.getMultiTagResult();
-      if (multiTagResult.isPresent()) {
-        var fieldToCamera = multiTagResult.get().estimatedPose.best;
-        //m_field.setRobotPose(new Pose2d(fieldToCamera.getX(),fieldToCamera.getY(), fieldToCamera.getRotation().toRotation2d()));
-      }
-    }
+  // Elastic Field with photonvision
+
+  //   var results = camera.getAllUnreadResults();
+  //   for (var result : results) {
+  //     var multiTagResult = result.getMultiTagResult();
+  //     if (multiTagResult.isPresent()) {
+  //       var fieldToCamera = multiTagResult.get().estimatedPose.best;
+  //       m_field.setRobotPose(new Pose2d(fieldToCamera.getX(),fieldToCamera.getY(), fieldToCamera.getRotation().toRotation2d()));
+  //     }
+  //   }
+
+
+  
     var state = drivetrain.getState();
     Pose2d pose = state.Pose;
     m_field.setRobotPose(pose);
@@ -196,6 +202,21 @@ public class Robot extends TimedRobot {
       m_AutonomousContol.registerCommands();
       oldD2 = SmartDashboard.getNumber("D2", 0);
     }
+  // Elastic Field with limelight
+
+      m_field.setRobotPose(FieldLocationsHelper.getRobotFieldPose());
+
+      // System.out.println(FieldLocationsHelper.getRobotFieldPose().getMeasureX().toLongString());
+      // System.out.println(FieldLocationsHelper.getDistanceFromRobot(new Pose2d(0,0,new Rotation2d(0))).toLongString());
+
+      Pose2d targetPose = t_field.getRobotPose();
+
+
+      AngleDistance ad = FieldLocationsHelper.getDifferencePoseFromRobot(targetPose);
+      System.out.println("FDA: "+ad.fieldDifferenceAngle);
+      System.out.println("robotDifferenceAngle: "+ad.robotDifferenceAngle);
+
+
   }
 
 
@@ -241,7 +262,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousExit() {}
+  public void autonomousExit() { } // Cheese
 
   @Override
   public void teleopInit() {
