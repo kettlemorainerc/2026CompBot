@@ -79,11 +79,9 @@ public class FieldLocationsHelper implements Subsystem {
 
         double fieldDifferenceAngle = Math.atan2(xT-xR,yT-yR) *180/Math.PI;
 
-
-
-
         double robotDifferenceAngle = (fieldDifferenceAngle + robotDegrees) % 360;
 
+        
         // System.out.println("Robo Degree: "+robotDegrees);
 
         return new AngleDistance(fieldDifferenceAngle, robotDifferenceAngle, distance); 
