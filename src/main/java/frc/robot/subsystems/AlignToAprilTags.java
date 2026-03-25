@@ -6,6 +6,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.LimelightHelpers;
 import frc.robot.RobotHardware;
 import frc.robot.command.NewRepeatedCommand;
@@ -37,13 +38,14 @@ public class AlignToAprilTags extends NewRepeatedCommand{
     // if it is too high, the robot will oscillate around.
     // if it is too low, the robot will never reach its target
     // if the robot never turns in the correct direction, kP should be inverted.
-    double kP = .0035;
+    double kP = .035;
 
     double angleFromTarget = FieldLocationsHelper.getDifferencePoseFromRobot(FieldLocationsHelper.getHubTargetPosition()).robotDifferenceAngle;
-    // if(angleFromTarget > 180){
-    //   angleFromTarget = (angleFromTarget - 360);
-    // }
+    if(angleFromTarget > 180){
+      angleFromTarget = (angleFromTarget - 360);
+    }
     System.out.println(angleFromTarget);
+    SmartDashboard.putNumber("Angle", angleFromTarget);
 
     // tx ranges from (-hfov/2) to (hfov/2) in degrees. If your target is on the rightmost edge of 
     // your limelight 3 feed, tx should return roughly 31 degrees.
@@ -52,7 +54,14 @@ public class AlignToAprilTags extends NewRepeatedCommand{
     // convert to radians per second for our drive method
     targetingAngularVelocity *= drivetrain.MaxAngularRate;
 
-    targetingAngularVelocity *= -1.0;
+    targetingAngularVelocity *= 1.0;
+    if(targetingAngularVelocity < 1 && targetingAngularVelocity > 0){
+      targetingAngularVelocity = 1;
+    }else if(targetingAngularVelocity > -1 && targetingAngularVelocity < 0){
+      targetingAngularVelocity = -1;
+    }
+    System.out.println("vel: " + targetingAngularVelocity);
+    SmartDashboard.putNumber("Velocity", targetingAngularVelocity);
 
     return targetingAngularVelocity;
   }

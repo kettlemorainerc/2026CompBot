@@ -218,11 +218,14 @@ public class Robot extends TimedRobot {
       // System.out.println(FieldLocationsHelper.getDistanceFromRobot(new Pose2d(0,0,new Rotation2d(0))).toLongString());
 
       Pose2d targetPose = t_field.getRobotPose();
+      
 
 
       AngleDistance ad = FieldLocationsHelper.getDifferencePoseFromRobot(targetPose);
+      SmartDashboard.putNumber("Angle", ad.robotDifferenceAngle);
+      SmartDashboard.putNumber("fieldAngle", ad.fieldDifferenceAngle);
       // System.out.println("FDA: "+ad.fieldDifferenceAngle);
-      System.out.println("robotDifferenceAngle: "+ad.robotDifferenceAngle);
+      // System.out.println("robotDifferenceAngle: "+ad.robotDifferenceAngle);
 
 
   }

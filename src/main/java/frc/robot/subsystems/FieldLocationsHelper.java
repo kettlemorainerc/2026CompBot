@@ -68,7 +68,7 @@ public class FieldLocationsHelper implements Subsystem {
         double yT = targetPose.getY();
         double xR = robotPose.getX();
         double yR = robotPose.getY();
-        double robotDegrees = robotPose.getRotation().getDegrees();
+        double robotDegrees = robotPose.getRotation().getDegrees() - 90;
 
 
         double deltaX = xT-xR;
@@ -82,7 +82,7 @@ public class FieldLocationsHelper implements Subsystem {
 
 
 
-        double robotDifferenceAngle = (fieldDifferenceAngle - robotDegrees + 270) % 360;
+        double robotDifferenceAngle = (fieldDifferenceAngle + robotDegrees) % 360;
 
         // System.out.println("Robo Degree: "+robotDegrees);
 
@@ -93,10 +93,10 @@ public class FieldLocationsHelper implements Subsystem {
         Optional<Alliance> alli = DriverStation.getAlliance();
         if(!alli.isEmpty()){
             if(alli.get() == DriverStation.Alliance.Red){
-                System.out.println("RED");
+                // System.out.println("RED");
                 return new Pose2d(Meters.of(12), Meters.of(4), new Rotation2d());
             }else{
-                System.out.println("BLUE");
+                // System.out.println("BLUE");
                 return new Pose2d(Meters.of(4.5), Meters.of(4), new Rotation2d());
             }
         }else{
