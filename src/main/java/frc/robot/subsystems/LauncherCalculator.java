@@ -1,22 +1,30 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Feet;
+import static edu.wpi.first.units.Units.Meters;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.units.measure.Distance;
 import frc.robot.LimelightHelpers;
-import frc.robot.subsystems.EstimateDistance;
+// import frc.robot.subsystems.EstimateDistance;
+import frc.robot.subsystems.FieldLocationsHelper.AngleDistance;
 
 public class LauncherCalculator {
 
     public static double getRPMFromDistance() {
 
-        Pose3d targetPose = LimelightHelpers.getTargetPose3d_CameraSpace("limelight");
+        Pose2d tp = FieldLocationsHelper.getHubTargetPosition();
+        AngleDistance targetPose = FieldLocationsHelper.getDifferencePoseFromRobot(tp);//add their stuff here
+        
 
         // The 'z' translation in camera space is the direct distance to the tag
-        double distanceInMeters = targetPose.getZ(); 
-        System.out.println(distanceInMeters);
+        Distance distanceInMeters = targetPose.distance; //change this 
+        // System.out.println(distanceInMeters);
 
         // Inputs
-        double distanceToTarget = distanceInMeters; // meters
-        double launchAngleDegrees = 25.0; // degrees
+        double distanceToTarget = distanceInMeters.in(Meters); //change this also
+        double launchAngleDegrees = 35.0; // degrees
         double wheelDiameter = 0.1016; // 100mm, in meters
             
         // 1. Calculate Required Velocity (v)
@@ -32,7 +40,7 @@ public class LauncherCalculator {
         System.out.println("Required Velocity: " + String.format("%.2f", velocityRequired) + " m/s");
         System.out.println("Required RPM: " + String.format("%.0f", distanceRPM));
 
-        return distanceRPM + 2000;
+        return distanceRPM + 2250;
 
 
     }

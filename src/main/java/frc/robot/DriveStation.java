@@ -33,7 +33,8 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlignToAprilTags;
 import frc.robot.subsystems.ChangeCentricity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.EstimateDistance;
+import frc.robot.subsystems.FieldLocationsHelper;
+// import frc.robot.subsystems.EstimateDistance;
 import frc.robot.subsystems.LauncherCalculator;
 import frc.robot.subsystems.Roomba;
 import frc.robot.subsystems.MagicCarpet;
@@ -154,7 +155,7 @@ public class DriveStation {
 
         // new AlignToAprilTags().bind(new JoystickButton(secondary, 20));
 
-        new EstimateDistance().bind(new JoystickButton(secondary, 19));
+        // new .bind(new JoystickButton(secondary, 19));
         // new LaucherControl(2000).bind(new JoystickButton(secondary, 2));
         // new ChangeCentricityControl().bind(new JoystickButton(secondary, 2));
         // final TestControl testControl = new TestControl();
