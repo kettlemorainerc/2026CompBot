@@ -22,7 +22,7 @@ public class AutonomousContol {
 private SendableChooser<Command> autoChooser;
 
     public AutonomousContol(){
-        RPMChangeHolder rpm = new RPMChangeHolder(3000);
+        RPMChangeHolder rpm = new RPMChangeHolder();
         RPMChangeHolder stopSpeed = new RPMChangeHolder(0);
 
         NamedCommands.registerCommand("Debug", Commands.print("DEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUG"));

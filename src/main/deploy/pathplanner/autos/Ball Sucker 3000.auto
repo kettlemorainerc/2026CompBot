@@ -13,31 +13,6 @@
                 "data": {
                   "pathName": "Ball Sucker 3000 Start"
                 }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Reverse Intake"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.0
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Stop Intake"
-                      }
-                    }
-                  ]
-                }
               }
             ]
           }
@@ -64,6 +39,36 @@
           "type": "path",
           "data": {
             "pathName": "Ball Sucker 3000 Finish"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Feed The Beast"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Launcher"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 10.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Starve The Beast"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Launcher"
           }
         }
       ]

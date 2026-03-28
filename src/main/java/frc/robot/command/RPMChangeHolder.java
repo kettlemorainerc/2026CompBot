@@ -1,14 +1,21 @@
 package frc.robot.command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.FieldLocationsHelper;
+import frc.robot.subsystems.LauncherCalculator;
 
 
 public class RPMChangeHolder{
     
     private double targetRPM;
+    private boolean autoSpeed;
 
     public RPMChangeHolder(int rpm){
         this.targetRPM = rpm;
+        this.autoSpeed = false;
+    }
 
+    public RPMChangeHolder(){
+        this.autoSpeed = true;
     }
 
     public void changeRPMTarget(Double rpm){
@@ -22,7 +29,10 @@ public class RPMChangeHolder{
         SmartDashboard.putNumber("Auto speed", targetRPM);
     }
 
-    public double getTargetRPM(){        
+    public double getTargetRPM(){      
+        if(autoSpeed){
+            this.targetRPM = LauncherCalculator.getRPMFromDistance();
+        }  
         return targetRPM;
     }
 

@@ -34,11 +34,11 @@ public class MagicCarpet implements Subsystem {
     }
 
     public void carpetFly(){
-        motor.set(0.2);
+        motor.set(0.5);
     }
 
     public void carpetFall(){
-        motor.set(-0.2);
+        motor.set(-0.5);
     }
 
     public void stopCarpet(){

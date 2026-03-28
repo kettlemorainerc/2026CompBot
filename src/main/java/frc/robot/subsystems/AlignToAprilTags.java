@@ -38,7 +38,7 @@ public class AlignToAprilTags extends NewRepeatedCommand{
     // if it is too high, the robot will oscillate around.
     // if it is too low, the robot will never reach its target
     // if the robot never turns in the correct direction, kP should be inverted.
-    double kP = .035; // TODO: Change to fix violent speeds hopefully :pleading: pretty please dont break everything
+    double kP = .0035; // TODO: Change to fix violent speeds hopefully :pleading: pretty please dont break everything
 
     double angleFromTarget = FieldLocationsHelper.getDifferencePoseFromRobot(FieldLocationsHelper.getHubTargetPosition()).robotDifferenceAngle+180;
     if(angleFromTarget < -180){

@@ -34,11 +34,11 @@ public class Roomba implements Subsystem {
     }
 
     public void startRoomba(){
-        motor.set(0.5);
+        motor.set(0.8);
     }
 
     public void reverseRoomba(){
-        motor.set(-0.5);
+        motor.set(-0.8);
     }
 
     public void stopRoomba(){
