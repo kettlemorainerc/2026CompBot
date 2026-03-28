@@ -8,6 +8,7 @@ import frc.robot.command.LauncherControl;
 import frc.robot.command.MagicCarpetControls;
 import frc.robot.command.RPMChangeHolder;
 import frc.robot.command.RoombaControls;
+import frc.robot.command.ShakerControl;
 import frc.robot.command.MagicCarpetControls.CarpetDirection;
 import frc.robot.command.RoombaControls.RoombaDirection;
 
@@ -34,6 +35,7 @@ private SendableChooser<Command> autoChooser;
         NamedCommands.registerCommand("Feed The Beast", new MagicCarpetControls(CarpetDirection.FALL
         , true).withTimeout(0));
         NamedCommands.registerCommand("Starve The Beast", new MagicCarpetControls(CarpetDirection.STOP, true).withTimeout(0));
+        NamedCommands.registerCommand("Shakekira", new ShakerControl().withTimeout(6));
 
 
 

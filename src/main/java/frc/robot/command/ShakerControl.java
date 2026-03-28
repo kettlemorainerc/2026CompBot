@@ -7,6 +7,14 @@ public class ShakerControl extends NewRepeatedCommand{
 
     private Shaker shaker = RobotHardware.getInstance().shaker;
     private int time;
+    private boolean stoper;
+
+    public ShakerControl(boolean stopOnStop){
+        this.stoper = stopOnStop;
+    }
+    public ShakerControl(){
+        this.stoper = false;
+    }
 
     @Override
     public void initialize(){
@@ -20,14 +28,14 @@ public class ShakerControl extends NewRepeatedCommand{
             shaker.Shake();
         }else if(time > 5 && time <= 10){
             shaker.Unshake();
-        }else if(time > 10){
+        }else if(time >= 10){
             time = 0;
         }
     }
 
     @Override
     public void end(boolean interrupted) {
-
+        
     }
 
 }
