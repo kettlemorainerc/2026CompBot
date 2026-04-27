@@ -66,6 +66,9 @@ public class Robot extends TimedRobot {
   private double oldD1 = 0;
   private double oldD2 = 0;
 
+  private float oldDriveLimit = 0.5f;
+  private float oldRotateLimit = 1.0f;
+
   private double testdirection;
 
 
@@ -129,6 +132,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("P2", 0);
     SmartDashboard.putNumber("I2", 0);
     SmartDashboard.putNumber("D2", 0);
+
+    SmartDashboard.putNumber("Drive Limit", 0.5f);
+    SmartDashboard.putNumber("Rotation Limiter", 1.0f);
 
     SmartDashboard.putData("TargetPoseField", t_field);
 
@@ -209,6 +215,13 @@ public class Robot extends TimedRobot {
       drivetrain.configureAuto(SmartDashboard.getNumber("P1", 0), SmartDashboard.getNumber("I1", 0), SmartDashboard.getNumber("D1", 0), SmartDashboard.getNumber("P2", 0), SmartDashboard.getNumber("I2", 0), SmartDashboard.getNumber("D2", 0));
       m_AutonomousContol.registerCommands();
       oldD2 = SmartDashboard.getNumber("D2", 0);
+    }
+
+    if(SmartDashboard.getNumber("Drive Limit", 1.0f) != oldDriveLimit){
+      RobotHardware.getInstance().speedLimiterDrive = (float) SmartDashboard.getNumber("Drive Limit", 0.5f);
+    }
+    if(SmartDashboard.getNumber("Rotation Limit", 1.0f) != oldRotateLimit){
+      RobotHardware.getInstance().speedLimiterSpin = (float) SmartDashboard.getNumber("Rotation Limit", 1.0f);
     }
   // Elastic Field with limelight
 

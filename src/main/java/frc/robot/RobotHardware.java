@@ -63,6 +63,8 @@ public class RobotHardware{
     public final Roomba roomba;
     public final MagicCarpet carpet;
     public final Shaker shaker;
+    public float speedLimiterDrive;
+    public float speedLimiterSpin;
 
     public RobotHardware(){
         instance = this;
@@ -73,7 +75,8 @@ public class RobotHardware{
         roomba = new Roomba();
         carpet = new MagicCarpet();
         shaker = new Shaker();
-
+        speedLimiterDrive = 1.0f;
+        speedLimiterSpin = 1.0f;
 
 
         // Launcher motors

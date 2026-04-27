@@ -115,7 +115,7 @@ public class DriveStation {
     private static void bindDriverControl(RobotHardware hardware, DriveXboxController primary) {
         new ChangeCentricityControl(Directionality.FIELD).bind(new JoystickButton(primary, 6));
         new ChangeCentricityControl(Directionality.BACKWARDS).bind(new JoystickButton(primary, 3));
-        new ShakerControl().bind(new JoystickButton(primary, 4));
+        // new ShakerControl().bind(new JoystickButton(primary, 4));
         new AlignToAprilTags().bind(new JoystickButton(primary, 8));
         // new AlignToAprilTags().bind(new JoystickButton(primary, DRIVE_JOYSTICK_PORT));
         // sgijrgirgirgjirgjr
@@ -207,9 +207,9 @@ public class DriveStation {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
-                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 2) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * RobotHardware.getInstance().speedLimiterDrive) // Drive forward with negative Y (forward)
+                    .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * RobotHardware.getInstance().speedLimiterDrive) // Drive left with negative X (left)
+                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * RobotHardware.getInstance().speedLimiterSpin) // Drive counterclockwise with negative X (left)
             )
         );
 

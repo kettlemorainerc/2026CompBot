@@ -35,6 +35,8 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class ChangeCentricity implements Subsystem{
+    
+    private RobotHardware hardware = RobotHardware.getInstance();
 
     public static double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     public static double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -60,22 +62,22 @@ public class ChangeCentricity implements Subsystem{
     public void setFieldCentric(){
         System.out.println("I WAS CALLED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         drivetrain.setControl(
-            fieldDrive.withVelocityX(driveNewJoystick.getLeftY() * MaxSpeed * 0.25) // Drive forward with negative Y (forward)
-                    .withVelocityY(driveNewJoystick.getLeftX() * MaxSpeed * 0.25) // Drive left with negative X (left)
-                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 1) // Drive counterclockwise with negative X (left)
+            fieldDrive.withVelocityX(driveNewJoystick.getLeftY() * MaxSpeed * hardware.speedLimiterDrive) // Drive forward with negative Y (forward)
+                    .withVelocityY(driveNewJoystick.getLeftX() * MaxSpeed * hardware.speedLimiterDrive) // Drive left with negative X (left)
+                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * hardware.speedLimiterSpin) // Drive counterclockwise with negative X (left)
         );
         Optional<Alliance> ally = DriverStation.getAlliance();
         if(ally.get() == Alliance.Blue){
             drivetrain.setControl(
-                fieldDrive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
-                        .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
-                        .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 2) // Drive counterclockwise with negative X (left)
+                fieldDrive.withVelocityX(-driveNewJoystick.getLeftY() * MaxSpeed * hardware.speedLimiterDrive) // Drive forward with negative Y (forward)
+                        .withVelocityY(-driveNewJoystick.getLeftX() * MaxSpeed * hardware.speedLimiterDrive) // Drive left with negative X (left)
+                        .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * hardware.speedLimiterSpin) // Drive counterclockwise with negative X (left)
                 );
         }else if(ally.get() == Alliance.Red){
             drivetrain.setControl(
-            fieldDrive.withVelocityX(driveNewJoystick.getLeftY() * MaxSpeed * 0.5) // Drive forward with negative Y (forward)
-                    .withVelocityY(driveNewJoystick.getLeftX() * MaxSpeed * 0.5) // Drive left with negative X (left)
-                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * 2) // Drive counterclockwise with negative X (left)
+            fieldDrive.withVelocityX(driveNewJoystick.getLeftY() * MaxSpeed * hardware.speedLimiterDrive) // Drive forward with negative Y (forward)
+                    .withVelocityY(driveNewJoystick.getLeftX() * MaxSpeed * hardware.speedLimiterDrive) // Drive left with negative X (left)
+                    .withRotationalRate(-driveNewJoystick.getRightX() * MaxAngularRate * hardware.speedLimiterSpin) // Drive counterclockwise with negative X (left)
             );
         }
         
