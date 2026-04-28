@@ -7,7 +7,7 @@ public class ShakerControl extends NewRepeatedCommand{
 
     private Shaker shaker = RobotHardware.getInstance().shaker;
     private int time;
-    private boolean stoper;
+    private boolean stoper; //Does not actually do anything
 
     public ShakerControl(boolean stopOnStop){
         this.stoper = stopOnStop;

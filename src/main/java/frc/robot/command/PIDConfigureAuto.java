@@ -1,26 +1,19 @@
 package frc.robot.command;
 
 import edu.wpi.first.networktables.DoubleSubscriber;
-import edu.wpi.first.networktables.FloatSubscriber;
-import edu.wpi.first.networktables.FloatTopic;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotHardware;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
-public class PIDHURTSMYHEAD extends NewRepeatedCommand {
-
-    
+public class PIDConfigureAuto extends NewRepeatedCommand {
 
     private final CommandSwerveDrivetrain drivetrain;
 
 
     DoubleSubscriber dblSub;
 
-    public PIDHURTSMYHEAD(){
-        this.drivetrain = RobotHardware.getInstance().drivetrain;
-                           
+    public PIDConfigureAuto(){
+        this.drivetrain = RobotHardware.getInstance().drivetrain;                         
     }
 
     @Override

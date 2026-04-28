@@ -1,13 +1,9 @@
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.Feet;
 import static edu.wpi.first.units.Units.Meters;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.units.measure.Distance;
-import frc.robot.LimelightHelpers;
-// import frc.robot.subsystems.EstimateDistance;
 import frc.robot.subsystems.FieldLocationsHelper.AngleDistance;
 
 public class LauncherCalculator {

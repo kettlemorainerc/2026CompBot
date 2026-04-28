@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -14,11 +13,9 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 public class Roomba implements Subsystem {
 
     private final SparkMax motor;
-    private final SparkClosedLoopController motorPid;
 
     public Roomba(){
         motor = new SparkMax(53, MotorType.kBrushless);
-        motorPid = motor.getClosedLoopController();
         SparkMaxConfig config = new SparkMaxConfig();
         config
             .inverted(false)

@@ -3,8 +3,6 @@ package frc.robot.command;
 import frc.robot.RobotHardware;
 import frc.robot.subsystems.Roomba;
 
-import frc.robot.subsystems.Roomba;
-
 public class RoombaControls extends NewRepeatedCommand {
     public enum RoombaDirection{
         START,

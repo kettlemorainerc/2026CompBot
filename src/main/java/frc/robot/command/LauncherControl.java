@@ -1,12 +1,8 @@
 package frc.robot.command;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.RobotHardware;
 import frc.robot.subsystems.LauncherCalculator;
 import frc.robot.subsystems.LauncherOperations;
-import frc.robot.subsystems.MagicCarpet;
-// import frc.robot.command.newRepeatedCommand;
 
 
 //Max RPM of The Default NEO Spark Max's is 5,676 at 12Volts

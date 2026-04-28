@@ -3,16 +3,13 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.LimelightHelpers;
 import frc.robot.RobotHardware;
 import frc.robot.command.NewRepeatedCommand;
 import frc.robot.generated.TunerConstants;
 
-import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
@@ -27,7 +24,7 @@ public class AlignToAprilTags extends NewRepeatedCommand{
         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
     private CommandSwerveDrivetrain drivetrain = RobotHardware.getInstance().drivetrain;
-// simple proportional turning control with Limelight.
+  // simple proportional turning control with Limelight.
   // "proportional control" is a control algorithm in which the output is proportional to the error.
   // in this case, we are going to return an angular velocity that is proportional to the 
   // "tx" value from the Limelight.
@@ -38,7 +35,7 @@ public class AlignToAprilTags extends NewRepeatedCommand{
     // if it is too high, the robot will oscillate around.
     // if it is too low, the robot will never reach its target
     // if the robot never turns in the correct direction, kP should be inverted.
-    double kP = .0035; // TODO: Change to fix violent speeds hopefully :pleading: pretty please dont break everything
+    double kP = .0035;
 
     double angleFromTarget = FieldLocationsHelper.getDifferencePoseFromRobot(FieldLocationsHelper.getHubTargetPosition()).robotDifferenceAngle+180;
     if(angleFromTarget < -180){

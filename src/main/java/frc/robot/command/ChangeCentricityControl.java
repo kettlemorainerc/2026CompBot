@@ -2,7 +2,6 @@ package frc.robot.command;
 
 import frc.robot.RobotHardware;
 import frc.robot.subsystems.ChangeCentricity;
-// import frc.robot.command.newRepeatedCommand;
 
 public class ChangeCentricityControl extends NewRepeatedCommand{
     public enum Directionality{
@@ -12,10 +11,9 @@ public class ChangeCentricityControl extends NewRepeatedCommand{
 
     private final ChangeCentricity ChangeCentricity;
     private Directionality direction;
-    private boolean isRobotCentric = false;
 
     public ChangeCentricityControl(Directionality directionality){
-        System.out.println("I WAS CALLED ChangeCentricityControlChangeCentricityControlChangeCentricityControl!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+        System.out.println("ChangeCentricity was called "+directionality.toString());
         this.ChangeCentricity = RobotHardware.getInstance().changeCentricity;
         this.direction = directionality;
     }

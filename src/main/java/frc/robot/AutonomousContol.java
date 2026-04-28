@@ -12,11 +12,8 @@ import frc.robot.command.ShakerControl;
 import frc.robot.command.MagicCarpetControls.CarpetDirection;
 import frc.robot.command.RoombaControls.RoombaDirection;
 
-import javax.sound.sampled.SourceDataLine;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 
 public class AutonomousContol {
 
@@ -26,17 +23,15 @@ private SendableChooser<Command> autoChooser;
         RPMChangeHolder rpm = new RPMChangeHolder();
         RPMChangeHolder stopSpeed = new RPMChangeHolder(0);
 
-        NamedCommands.registerCommand("Debug", Commands.print("DEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUG"));
+        NamedCommands.registerCommand("Debug", Commands.print("DEBUG AutonomousControl"));
         NamedCommands.registerCommand("Start Intake", new RoombaControls(RoombaDirection.START, true).withTimeout(0));
         NamedCommands.registerCommand("Stop Intake", new RoombaControls(RoombaDirection.STOP, true).withTimeout(0));
         NamedCommands.registerCommand("Reverse Intake", new RoombaControls(RoombaDirection.REVERSE, true).withTimeout(0));
         NamedCommands.registerCommand("Start Launcher", new LauncherControl(rpm, true).withTimeout(0));
         NamedCommands.registerCommand("Stop Launcher", new LauncherControl(stopSpeed, false).withTimeout(0));
-        NamedCommands.registerCommand("Feed The Beast", new MagicCarpetControls(CarpetDirection.FALL
-        , true).withTimeout(0));
+        NamedCommands.registerCommand("Feed The Beast", new MagicCarpetControls(CarpetDirection.FALL, true).withTimeout(0));
         NamedCommands.registerCommand("Starve The Beast", new MagicCarpetControls(CarpetDirection.STOP, true).withTimeout(0));
         NamedCommands.registerCommand("Shakekira", new ShakerControl().withTimeout(6));
-
 
 
         autoChooser = AutoBuilder.buildAutoChooser();
@@ -46,7 +41,7 @@ private SendableChooser<Command> autoChooser;
     }
 
 
-    public Command getAuntonomousCommand(){
+    public Command getAutonomousCommand(){
         Command selected = autoChooser.getSelected();
         return selected;
     }
@@ -54,16 +49,14 @@ private SendableChooser<Command> autoChooser;
         RPMChangeHolder rpm = new RPMChangeHolder(3000);
         RPMChangeHolder stopSpeed = new RPMChangeHolder(0);
 
-        NamedCommands.registerCommand("Debug", Commands.print("DEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUGDEBUG"));
+        NamedCommands.registerCommand("Debug", Commands.print("DEBUG registerCommands"));
         NamedCommands.registerCommand("Start Intake", new RoombaControls(RoombaDirection.START, true).withTimeout(0));
         NamedCommands.registerCommand("Stop Intake", new RoombaControls(RoombaDirection.STOP, true).withTimeout(0));
         NamedCommands.registerCommand("Reverse Intake", new RoombaControls(RoombaDirection.REVERSE, true).withTimeout(0));
         NamedCommands.registerCommand("Start Launcher", new LauncherControl(rpm, true).withTimeout(0));
         NamedCommands.registerCommand("Stop Launcher", new LauncherControl(stopSpeed, false).withTimeout(0));
-        NamedCommands.registerCommand("Feed The Beast", new MagicCarpetControls(CarpetDirection.FALL
-        , true).withTimeout(0));
+        NamedCommands.registerCommand("Feed The Beast", new MagicCarpetControls(CarpetDirection.FALL, true).withTimeout(0));
         NamedCommands.registerCommand("Starve The Beast", new MagicCarpetControls(CarpetDirection.STOP, true).withTimeout(0));
-
 
 
         autoChooser = AutoBuilder.buildAutoChooser();

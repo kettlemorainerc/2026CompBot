@@ -1,14 +1,7 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.generated.TunerConstants;
-
-import com.revrobotics.spark.SparkClosedLoopController;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.SparkMax;
 
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
@@ -18,21 +11,10 @@ import java.util.Optional;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.button.*;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.DriveStation;
 import frc.robot.RobotHardware;
-import frc.robot.command.*;
-import frc.robot.control.DriveJoystick;
-import frc.robot.control.DriveStick;
-import frc.robot.control.DriveXboxController;
-import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class ChangeCentricity implements Subsystem{
     
@@ -60,7 +42,6 @@ public class ChangeCentricity implements Subsystem{
     }
 
     public void setFieldCentric(){
-        System.out.println("I WAS CALLED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
         drivetrain.setControl(
             fieldDrive.withVelocityX(driveNewJoystick.getLeftY() * MaxSpeed * hardware.speedLimiterDrive) // Drive forward with negative Y (forward)
                     .withVelocityY(driveNewJoystick.getLeftX() * MaxSpeed * hardware.speedLimiterDrive) // Drive left with negative X (left)

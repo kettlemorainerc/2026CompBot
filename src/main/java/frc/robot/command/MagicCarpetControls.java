@@ -41,6 +41,8 @@ public class MagicCarpetControls extends NewRepeatedCommand {
             case STOP:
                 carpet.stopCarpet();
                 break;
+            case WAIT:
+                break;
         }
     }
 
@@ -48,14 +50,12 @@ public class MagicCarpetControls extends NewRepeatedCommand {
     public void execute() {
         if(direction == CarpetDirection.FLY){
             carpet.carpetFly();
-        }
-        if(direction == CarpetDirection.FALL){
+        } else if(direction == CarpetDirection.FALL){
             carpet.carpetFall();
-        }
-        if(direction == CarpetDirection.WAIT){
+        } else if(direction == CarpetDirection.WAIT){
             if(holder.getTargetRPM() > RobotHardware.getInstance().leftLauncherMotor.getEncoder().getVelocity()) {
-            }
-            if(holder.getTargetRPM() <= RobotHardware.getInstance().leftLauncherMotor.getEncoder().getVelocity()) {
+                
+            } else if(holder.getTargetRPM() <= RobotHardware.getInstance().leftLauncherMotor.getEncoder().getVelocity()) {
                 carpet.carpetFall();
             }
         }

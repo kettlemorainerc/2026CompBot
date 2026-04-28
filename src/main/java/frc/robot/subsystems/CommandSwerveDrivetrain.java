@@ -142,7 +142,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
         RobotConfig config;
         try{
-            System.out.println("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
             config = RobotConfig.fromGUISettings();
 
             // Configure AutoBuilder last
@@ -204,7 +203,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
         RobotConfig config;
         try{
-            System.out.println("222222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
             config = RobotConfig.fromGUISettings();
 
             // Configure AutoBuilder last
@@ -270,7 +268,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
         RobotConfig config;
         try{
-            System.out.println("33333333333333333333333333333333333333333333333333333333333333333333333333333333");
             config = RobotConfig.fromGUISettings();
 
             // Configure AutoBuilder last
@@ -417,7 +414,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
     
     public void driveRobotRelative(ChassisSpeeds speeds){
-        // System.out.println("I BE DOING A THING THAT DOES A THING TO HOPEFULLY WHEEL THE THING TO DOING THE THING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         // System.out.println(speeds.vxMetersPerSecond);
         // System.out.println(speeds.vyMetersPerSecond);
         // System.out.println(speeds.omegaRadiansPerSecond);
@@ -429,7 +425,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     public void configureAuto(double p1, double i1, double d1, double p2, double i2, double d2){
-        System.out.println(p1 + " " + p2 + " " + i1 + " " + i2 + " " + d1 + " " + d2 + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println("configuredAuto values: " + p1 + " " + p2 + " " + i1 + " " + i2 + " " + d1 + " " + d2);
         RobotConfig config;
         try {
             config = RobotConfig.fromGUISettings();
@@ -461,11 +457,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
             );
         } catch (IOException | ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
-        }
-
-            // Configure AutoBuilder last
-            
+        }            
     }
 }

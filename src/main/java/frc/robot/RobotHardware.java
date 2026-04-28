@@ -1,9 +1,7 @@
 package frc.robot;
 
-import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -30,7 +28,6 @@ public class RobotHardware{
 
     static final boolean LEFT_INVERSION_STATUS = false;
 
-    // private final SparkClosedLoopController motorPid;
 
     /* CAN Ordering:
      * 0-20 (Avoided to exclude legacy setups)
@@ -40,18 +37,15 @@ public class RobotHardware{
      * 31-40 (Encoders+)
      * 41-50 (Reserved for future uses)
      * 50-70 (Other Motors)
-     */
 
     //  TODO: Turn into enums swapappable 
-    /**
+
      * Even = Drive
      * Odd = Steer
      * A = 20 = Front Right
      * B = 22 = Back Right
      * C = 24 = Front Left
      * D = 26 = Back Left
-     * 
-     * 
      */
 
     public static RobotHardware getInstance(){
@@ -82,7 +76,6 @@ public class RobotHardware{
         // Launcher motors
         leftLauncherMotor = new SparkMax(50, MotorType.kBrushless);
         rightLauncherMotor = new SparkMax(51, MotorType.kBrushless);
-        // motorPid = motor.getClosedLoopController();
 
         SparkMaxConfig leftLauncherMotorConfig = new SparkMaxConfig();
         leftLauncherMotorConfig
@@ -110,8 +103,5 @@ public class RobotHardware{
         rightLauncherMotor.configure(rightLauncherMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
-
     
-
-
 }

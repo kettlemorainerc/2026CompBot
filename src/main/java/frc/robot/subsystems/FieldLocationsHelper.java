@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Meters;
 
-import java.lang.reflect.Field;
 import java.util.Optional;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -12,7 +11,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.LimelightHelpers;
-import frc.robot.Robot;
 import frc.robot.RobotHardware;
 
 public class FieldLocationsHelper implements Subsystem {
@@ -101,13 +99,6 @@ public class FieldLocationsHelper implements Subsystem {
             System.out.println("NO ALLIANCE");
             return null;
         }
-
     }
-
-    // public  findQuadrantFromTarget(Pose2d targetPose) {
-
-    // }
-
-
-
+    
 }

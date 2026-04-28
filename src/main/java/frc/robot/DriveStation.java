@@ -1,3 +1,8 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2026 FRC Team 2077. All Rights Reserved.                     */
+/* Open Source Software - may be modified and shared by FRC teams.            */
+/*----------------------------------------------------------------------------*/
+
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
@@ -6,18 +11,6 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2020 FRC Team 2077. All Rights Reserved.                     */
-/* Open Source Software - may be modified and shared by FRC teams.            */
-/*----------------------------------------------------------------------------*/
-
-
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.config.PIDConstants;
-import com.pathplanner.lib.config.RobotConfig;
-import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj2.command.button.*;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -27,19 +20,12 @@ import frc.robot.command.ElasticVisualsControl.SwitchTo;
 import frc.robot.command.RoombaControls.RoombaDirection;
 import frc.robot.command.MagicCarpetControls.CarpetDirection;
 import frc.robot.control.DriveJoystick;
-import frc.robot.control.DriveStick;
 import frc.robot.control.DriveXboxController;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlignToAprilTags;
 import frc.robot.subsystems.ChangeCentricity;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.FieldLocationsHelper;
-// import frc.robot.subsystems.EstimateDistance;
 import frc.robot.subsystems.LauncherCalculator;
-import frc.robot.subsystems.Roomba;
-import frc.robot.subsystems.MagicCarpet;
-import frc.robot.Robot;
-import frc.robot.util.Elastic;
 
 /**
  * This class is intended to be the center point of defining actions that can be utilized during teleop segments of
@@ -82,13 +68,13 @@ public class DriveStation {
 
     public DriveStation(RobotHardware hardware) {
         /** Set the driver's control method this MUST be a {@link DriveStick} implementation */
-//        driveStick = getFlysky();
-    //    driveStick = getJoystick();
+        //driveStick = getFlysky();
+        //driveStick = getJoystick();
         driveStick = getXbox();
         halfSwitch = new XboxController(DRIVE_XBOX_PORT);
 
         /** Set the technical control method. This can be any {@link Joystick} implementation */
-//        technicalStick = getTechnicalJoystick();
+        //technicalStick = getTechnicalJoystick();
         technicalStick = getNumpad();
 
         bind(hardware);
@@ -100,7 +86,6 @@ public class DriveStation {
      * control method.
      */
     public void bind(RobotHardware hardware) {
-        System.out.println("BIND ROBOT HARDWARE!!!");
 
         // Setup basic robot movement commands
         // hardware.getPosition().setDefaultCommand(new CardinalMovement((DriveXboxController) driveStick, halfSwitch));
@@ -118,7 +103,6 @@ public class DriveStation {
         // new ShakerControl().bind(new JoystickButton(primary, 4));
         new AlignToAprilTags().bind(new JoystickButton(primary, 8));
         // new AlignToAprilTags().bind(new JoystickButton(primary, DRIVE_JOYSTICK_PORT));
-        // sgijrgirgirgjirgjr
         // new ChangeCentricityControl().bind(new JoystickButton((GenericHID) primary, 0));
         
     }
@@ -194,9 +178,6 @@ public class DriveStation {
     }
 
     /** bind command to the given joystick button */
-    // public static void useCommand(Joystick joystick, int button, BindableCommand command) {
-    //     // command.bind(new JoystickButton(joystick, button));
-    // }
     private void configureDriveControls() {
         CommandSwerveDrivetrain drivetrain = RobotHardware.getInstance().drivetrain;
 
@@ -236,8 +217,7 @@ public class DriveStation {
         // reset the field-centric heading on left bumper press
         driveNewJoystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
-        // drivetrain.registerTelemetry(logger::telemeterize);
-        // TODO: PUT THIS BACK!
+        // drivetrain.registerTelemetry(logger::telemeterize); // TODO: Add back telemetry
     }
 
     public CommandXboxController getController(){
