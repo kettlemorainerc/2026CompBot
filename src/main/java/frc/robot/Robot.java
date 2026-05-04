@@ -165,10 +165,10 @@ public class Robot extends TimedRobot {
     }
 
     if(SmartDashboard.getNumber("Drive Limit", 1.0f) != oldDriveLimit){
-      RobotHardware.getInstance().speedLimiterDrive = (float) SmartDashboard.getNumber("Drive Limit", 0.5f);
+      RobotHardware.getInstance().speedLimiterDrive = (float) SmartDashboard.getNumber("Drive Limit", 0.1f);
     }
     if(SmartDashboard.getNumber("Rotation Limit", 1.0f) != oldRotateLimit){
-      RobotHardware.getInstance().speedLimiterSpin = (float) SmartDashboard.getNumber("Rotation Limit", 1.0f);
+      RobotHardware.getInstance().speedLimiterSpin = (float) SmartDashboard.getNumber("Rotation Limit", 0.5f);
     }
 
     // Elastic Field with limelight

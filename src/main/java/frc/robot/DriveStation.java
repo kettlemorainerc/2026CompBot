@@ -120,19 +120,19 @@ public class DriveStation {
 
 
         // new PIDHURTSMYHEAD().bind(new JoystickButton(secondary, 19));
-        new LauncherControl(holder).bind(new JoystickButton(secondary, 5));
-        new LauncherControl(visionHolder).bind(new JoystickButton(secondary, 1));
-        new LauncherControl(175.0 , holder, false).bind(new JoystickButton(secondary, 3));
-        new LauncherControl(-175.0 , holder, false).bind(new JoystickButton(secondary, 4));
-        new LauncherControl(LauncherCalculator.getRPMFromDistance(), visionHolder, true).bind(new JoystickButton(secondary, 1));
+        new LauncherControl(holder).bind(new JoystickButton(secondary, 1));
+        //new LauncherControl(visionHolder).bind(new JoystickButton(secondary, 1));
+        new LauncherControl(200.0 , holder, false).bind(new JoystickButton(secondary, 4));
+        new LauncherControl(-200.0 , holder, false).bind(new JoystickButton(secondary, 8));
+        //new LauncherControl(LauncherCalculator.getRPMFromDistance(), visionHolder, true).bind(new JoystickButton(secondary, 1));
         
 
         new RoombaControls(RoombaDirection.START).bind(new JoystickButton(secondary,2));
-        new RoombaControls(RoombaDirection.REVERSE).bind(new JoystickButton(secondary,6));
+        // new RoombaControls(RoombaDirection.REVERSE).bind(new JoystickButton(secondary,9));
 
-        new MagicCarpetControls(CarpetDirection.FALL, holder).bind(new JoystickButton(secondary,7));
-        new MagicCarpetControls(CarpetDirection.FLY, holder).bind(new JoystickButton(secondary,8));
-        new MagicCarpetControls(CarpetDirection.FALL, holder).bind(new JoystickButton(secondary,1));
+        new MagicCarpetControls(CarpetDirection.FALL, holder).bind(new JoystickButton(secondary,3));
+        new MagicCarpetControls(CarpetDirection.FLY, holder).bind(new JoystickButton(secondary,6));
+        //new MagicCarpetControls(CarpetDirection.FALL, holder).bind(new JoystickButton(secondary,1));
 
         new ElasticVisualsControl(SwitchTo.MAIN).bind(new JoystickButton(secondary, 9));
         new ElasticVisualsControl(SwitchTo.FIELD).bind(new JoystickButton(secondary, 10));

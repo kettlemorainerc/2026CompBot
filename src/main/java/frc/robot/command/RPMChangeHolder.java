@@ -19,7 +19,7 @@ public class RPMChangeHolder{
 
     public void changeRPMTarget(Double rpm){
         this.targetRPM += rpm;
-        this.targetRPM = Math.min(targetRPM, 5000);
+        this.targetRPM = Math.min(targetRPM, 3500);
         this.targetRPM = Math.max(targetRPM, 2000);
         SmartDashboard.putNumber("Motor Max", targetRPM);
     }
