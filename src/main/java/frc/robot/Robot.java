@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
   double voltage = RobotController.getBatteryVoltage();
   private CommandSwerveDrivetrain drivetrain;
   int tick;
+  private ElasticControls elastic;
 
 
   Random random = new Random();
@@ -54,7 +55,7 @@ public class Robot extends TimedRobot {
   public static final Field2d t_field = new Field2d();
 
   //PhotonCamera camera = new PhotonCamera("Camera_Module_v1");
-  private SparkMax leftLaucherMotor;
+  private SparkMax leftLauncherMotor;
 
 
   @Override public void robotInit() {
@@ -66,32 +67,14 @@ public class Robot extends TimedRobot {
 
     this.drivetrain = RobotHardware.getInstance().drivetrain;
 
-    
+    CameraServer.startAutomaticCapture();
+
 
 // TODO: THIS IS FINE, WE WILL MOVE THIS
 
-    leftLaucherMotor = hardware.leftLauncherMotor;
-
-    CameraServer.startAutomaticCapture();
-    SmartDashboard.putData("Swerve Drive", new Sendable() {
-
-      @Override
-      public void initSendable(SendableBuilder builder) {
-        builder.setSmartDashboardType("SwerveDrive");
-
-        builder.addDoubleProperty("Back Right Angle", () -> drivetrain.getModule(0).getSteerMotor().getPosition().getValueAsDouble(), null);
-        builder.addDoubleProperty("Back Right Velocity", () -> drivetrain.getModule(0).getDriveMotor().getVelocity().getValueAsDouble(), null);
-
-        builder.addDoubleProperty("Back Left Angle", () -> drivetrain.getModule(1).getSteerMotor().getPosition().getValueAsDouble(), null);
-        builder.addDoubleProperty("Back Left Velocity", () -> drivetrain.getModule(1).getDriveMotor().getVelocity().getValueAsDouble(), null);
-        builder.addDoubleProperty("Front Left Angle", () -> drivetrain.getModule(2).getSteerMotor().getPosition().getValueAsDouble(), null);
-        builder.addDoubleProperty("Front Left Velocity", () -> drivetrain.getModule(2).getDriveMotor().getVelocity().getValueAsDouble(), null);
-
-        builder.addDoubleProperty("Front Right Angle", () -> drivetrain.getModule(3).getSteerMotor().getPosition().getValueAsDouble(), null);
-        builder.addDoubleProperty("Front Right Velocity", () -> drivetrain.getModule(3).getDriveMotor().getVelocity().getValueAsDouble(), null);
-        
-      }
-    });
+    elastic = new ElasticControls(drivetrain);
+    
+    leftLauncherMotor = hardware.leftLauncherMotor;
 
 
     // TODO: We will also move this   // Do this in either robot or subsystem init
@@ -104,8 +87,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("I2", 0);
     SmartDashboard.putNumber("D2", 0);
 
-    SmartDashboard.putNumber("Drive Limit", 0.5f);
-    SmartDashboard.putNumber("Rotation Limiter", 1.0f);
+    SmartDashboard.putNumber("Drive Limit", 0.1f);
+    SmartDashboard.putNumber("Rotation Limiter", 0.5f);
 
     SmartDashboard.putData("TargetPoseField", t_field);
 
@@ -124,7 +107,7 @@ public class Robot extends TimedRobot {
     // Do this in either robot periodic or subsystem periodic
     
     SmartDashboard.putNumber("Match Timer", Timer.getMatchTime());
-    SmartDashboard.putNumber("Motor Rpm", leftLaucherMotor.getEncoder().getVelocity());
+    SmartDashboard.putNumber("Motor Rpm", leftLauncherMotor.getEncoder().getVelocity());
     SmartDashboard.putNumber("Battery Voltage", voltage);
     t_field.setRobotPose(FieldLocationsHelper.getHubTargetPosition());
     // SmartDashboard.putData("PID", PIDConfigureAuto);

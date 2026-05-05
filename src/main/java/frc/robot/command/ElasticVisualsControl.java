@@ -10,6 +10,7 @@ public class ElasticVisualsControl extends NewRepeatedCommand{
     }
 
     private final SwitchTo tab;
+    
 
 
     public ElasticVisualsControl(SwitchTo tab){
