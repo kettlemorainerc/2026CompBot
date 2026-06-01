@@ -69,8 +69,8 @@ public class RobotHardware{
         roomba = new Roomba();
         carpet = new MagicCarpet();
         shaker = new Shaker();
-        speedLimiterDrive = 0.1f;
-        speedLimiterSpin = 0.5f;
+        speedLimiterDrive = 0.2f;
+        speedLimiterSpin = 1.0f;
 
 
         // Launcher motors

@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
   private double oldD1 = 0;
   private double oldD2 = 0;
 
-  private float oldDriveLimit = 0.5f;
+  private float oldDriveLimit = 0.2f;
   private float oldRotateLimit = 1.0f;
 
   public static final Field2d m_field = new Field2d();
